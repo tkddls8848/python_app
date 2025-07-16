@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE CFXML [
+            <!ELEMENT CFXML (thisDocumentGenerationDateTime,thisDocumentIdentifier,CFData)>
+            <!ELEMENT thisDocumentGenerationDateTime (DateTimeStamp)>
+            <!ELEMENT thisDocumentIdentifier (ProprietaryDocumentIdentifier)>
+            <!ELEMENT CFData (ProprietaryInformation*,ProprietaryShippingInformation?,ProductLineItem+,CFReportBLOB?)>
+            <!ELEMENT ProprietaryShippingInformation (Name, FinancialAmount)>
+            <!ELEMENT ShippingUnitListPrice (FinancialAmount, PriceTerm)>
+            <!ELEMENT DateTimeStamp (#PCDATA)>
+            <!ELEMENT ProprietaryDocumentIdentifier (#PCDATA)>
+            <!ELEMENT ProprietaryInformation (Name,Value)>
+            <!ELEMENT ProductLineItem (  ProductLineNumber , TransactionType , CPUSIUvalue , ConfigurationControlNumber?, ProprietaryGroupIdentifier , ServicePacLineNumberReference? , Quantity  , ProductIdentification , UnitListPrice? , ShippingUnitListPrice? , MaintenanceUnitListPrice? , ProductSubLineItem* ) >
+            <!ELEMENT CFReportBLOB  (#PCDATA)>
+            <!ELEMENT Name  (#PCDATA)>
+            <!ELEMENT Value (#PCDATA)>
+            <!ELEMENT CPUSIUvalue (#PCDATA)>
+            <!ELEMENT ConfigurationControlNumber (#PCDATA)>
+            <!ELEMENT ProductLineNumber (#PCDATA)>
+            <!ELEMENT ProprietaryGroupIdentifier (#PCDATA)>
+            <!ELEMENT ServicePacLineNumberReference (#PCDATA)>
+            <!ELEMENT Quantity (#PCDATA)>
+            <!ELEMENT TransactionType (#PCDATA)>
+            <!ELEMENT ProductIdentification (PartnerProductIdentification*) >
+            <!ELEMENT ProductSubLineItem ( LineNumber, TransactionType, Quantity , ExchangeAddSubLineItemNumber? , ProductIdentification, UnitListPrice?,MaintenanceUnitListPrice?)>
+            <!ELEMENT UnitListPrice ( FinancialAmount, PriceTerm)>
+            <!ELEMENT MaintenanceUnitListPrice (FinancialAmount, PriceTerm)>
+            <!ELEMENT PartnerProductIdentification ( OrderedProductIdentifier?, ProprietaryProductIdentifier, ProductDescription?, ProductTypeCode?, ProductIdentifierTypeCode?) >
+            <!ELEMENT LineNumber (#PCDATA)>
+            <!ELEMENT ExchangeAddSubLineItemNumber (#PCDATA)>
+            <!ELEMENT FinancialAmount ( GlobalCurrencyCode, MonetaryAmount )>
+            <!ELEMENT PriceTerm (#PCDATA)>
+            <!ELEMENT OrderedProductIdentifier (#PCDATA)>
+            <!ELEMENT ProprietaryProductIdentifier (#PCDATA)>
+            <!ELEMENT ProductDescription (#PCDATA)>
+            <!ELEMENT ProductTypeCode (#PCDATA)>
+            <!ELEMENT ProductIdentifierTypeCode (#PCDATA)>
+            <!ELEMENT GlobalCurrencyCode (#PCDATA)>
+            <!ELEMENT MonetaryAmount (#PCDATA)>
+            
+]>
+<CFXML>
+  <thisDocumentGenerationDateTime>
+    <DateTimeStamp>10:07:57</DateTimeStamp>
+  </thisDocumentGenerationDateTime>
+  <thisDocumentIdentifier>
+    <ProprietaryDocumentIdentifier>CFXML.20250404_TS4300_LTO8 HH 6EA_Cleaning 6EA_media 20EA.2025-04-03T00:00:00+00:00</ProprietaryDocumentIdentifier>
+  </thisDocumentIdentifier>
+  <CFData>
+    <ProprietaryInformation>
+      <Name>CFXML</Name>
+      <Value>1.0</Value>
+    </ProprietaryInformation>
+    <ProprietaryInformation>
+      <Name>Configurator Identifier</Name>
+      <Value>ECMSSD.90501a250870</Value>
+    </ProprietaryInformation>
+    <ProprietaryInformation>
+      <Name>Price File Date</Name>
+      <Value>2025-04-04</Value>
+    </ProprietaryInformation>
+    <ProprietaryInformation>
+      <Name>Checksum</Name>
+      <Value>3386390122</Value>
+    </ProprietaryInformation>
+    <ProprietaryShippingInformation>
+      <Name>Total Non-discountable Shipping and Handling Charge</Name>
+      <FinancialAmount>
+        <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+        <MonetaryAmount>869.99</MonetaryAmount>
+      </FinancialAmount>
+    </ProprietaryShippingInformation>
+    <ProductLineItem>
+      <ProductLineNumber>1000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>1000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>3555-E3A</ProprietaryProductIdentifier>
+          <ProductDescription>No CPUSIU for the following products:TS4300 Tape Expansion Module</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>20,968.4</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>383.65</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <MaintenanceUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>472</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>Y</PriceTerm>
+      </MaintenanceUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>1001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>1899</ProprietaryProductIdentifier>
+            <ProductDescription>First Power Supply</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>3,092.3</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>1900</ProprietaryProductIdentifier>
+            <ProductDescription>Additional Power Supply</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>3,092.3</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1003</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>7002</ProprietaryProductIdentifier>
+            <ProductDescription>Rack Mount Kit</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>1,611.1</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1004</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9844</ProprietaryProductIdentifier>
+            <ProductDescription>2.8M Power Cord 250V Korea</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>64.9</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1005</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9848</ProprietaryProductIdentifier>
+            <ProductDescription>Rack to PDU line cord</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>64.9</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1006</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9906</ProprietaryProductIdentifier>
+            <ProductDescription>New order install</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1007</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>3</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AGK2</ProprietaryProductIdentifier>
+            <ProductDescription>25 meter OM3 fiber Cable (LC)</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>322.9</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1008</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>3</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AGKM</ProprietaryProductIdentifier>
+            <ProductDescription>LTO 8 HH Fibre channel drive</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>26,540.4</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1009</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKNC</ProprietaryProductIdentifier>
+            <ProductDescription>Premium S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>2000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>2000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>3555-L3A</ProprietaryProductIdentifier>
+          <ProductDescription>No CPUSIU for the following products:TS4300 Tape Base Module</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>23,706.1</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>383.65</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <MaintenanceUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>850</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>Y</PriceTerm>
+      </MaintenanceUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>2001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>1411</ProprietaryProductIdentifier>
+            <ProductDescription>Fibre Tape Drive Wrap Tool</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>870.4</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>1900</ProprietaryProductIdentifier>
+            <ProductDescription>Additional Power Supply</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>3,092.3</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2003</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>7002</ProprietaryProductIdentifier>
+            <ProductDescription>Rack Mount Kit</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>1,611.1</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2004</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9002</ProprietaryProductIdentifier>
+            <ProductDescription>First Expansion unit</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2005</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9600</ProprietaryProductIdentifier>
+            <ProductDescription>Attached to IBM AIX System</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2006</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9848</ProprietaryProductIdentifier>
+            <ProductDescription>Rack to PDU line cord</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>64.9</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2007</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>3</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AGK2</ProprietaryProductIdentifier>
+            <ProductDescription>25 meter OM3 fiber Cable (LC)</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>322.9</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2008</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>3</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AGKM</ProprietaryProductIdentifier>
+            <ProductDescription>LTO 8 HH Fibre channel drive</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>26,540.4</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2009</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AGL0</ProprietaryProductIdentifier>
+            <ProductDescription>GEN-3 Base Module</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2010</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKNC</ProprietaryProductIdentifier>
+            <ProductDescription>Premium S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>3000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>3000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>3589-004</ProprietaryProductIdentifier>
+          <ProductDescription>No CPUSIU for the following products:Ultrium cleaning cartridges</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>0</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>51.34</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>3001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>4001</ProprietaryProductIdentifier>
+            <ProductDescription>Ultrium Single Cleaning Cartridge</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>288</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>3002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>4005</ProprietaryProductIdentifier>
+            <ProductDescription>5-pack Ultrium cleaning cartridge</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>1,439.6</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>3003</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKNC</ProprietaryProductIdentifier>
+            <ProductDescription>Premium S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>4000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>4000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>3589-552</ProprietaryProductIdentifier>
+          <ProductDescription>No CPUSIU for the following products:12 TB Ultrium 8 Tape Cartridge 20-pack Labeled</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>0</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>51.34</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>4001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>5502</ProprietaryProductIdentifier>
+            <ProductDescription>12 TB Labeled 20-pack</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>13,125.4</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9003</ProprietaryProductIdentifier>
+            <ProductDescription>Label background color Red</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4003</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9022</ProprietaryProductIdentifier>
+            <ProductDescription>Color/vibrant background</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4004</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9110</ProprietaryProductIdentifier>
+            <ProductDescription>First character of Volser is A</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4005</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9200</ProprietaryProductIdentifier>
+            <ProductDescription>Second character of Volser is 0</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4006</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9300</ProprietaryProductIdentifier>
+            <ProductDescription>Third character of Volser is 0</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4007</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9400</ProprietaryProductIdentifier>
+            <ProductDescription>Fourth character of Volser is 0</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4008</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9500</ProprietaryProductIdentifier>
+            <ProductDescription>Fifth character of Volser is 0</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4009</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9600</ProprietaryProductIdentifier>
+            <ProductDescription>Sixth character of Volser is 0</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4010</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>9910</ProprietaryProductIdentifier>
+            <ProductDescription>Base 10 Count LBL Sequence</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>4011</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKNC</ProprietaryProductIdentifier>
+            <ProductDescription>Premium S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <CFReportBLOB><![CDATA[
+003120250403ECMSSD  90501a250870AP7660021                                                                                                   KRko                     00                                                                                                                                                
+030Unclassified          
+05         00                                                               
+05         00    CEID: 10ailnjz
+05         10                                                               
+05         10   Created on Fr Apr 04 2025 10:07:57 GMT+0900 (UTC) by Sang In
+05         00   Park                                                        
+05         10                                                               
+05         10   Customer Requested Arrival Date: 2025/04/18                 
+060921001MDDIBM_INC_SHIPPING^1^YES^IBM_WITHDRAWN_PRODUCTS_MODE^1^FALSE^IBM_FV_VISIBLE^1^FALSE^IBM_CRAD^1^19010102^SV_DEFAULT_CATEGORIES^0^SW_Global_06_swrs_cho_global_preference_control^1^sw_core_otc_charge_option^SW_Global_06_swrs_media_global_preference_control^1^swn_dvd_media^SW_Global_06_swrs_language_global_preference_control^1^sw_core_language_prim_korean^SW_Global_06_swrs_maintenance_global_preference_control^1^sw_core_nim_maint_3yr^SW_Global_06_swrs_shipping_options_global_control^1^sw_core_shipping_option_default^SW_Global_06_swrs_expedite_global_control^1^sw_core_shipping_option_no_expedite^SW_Global_06_swrs_suppress_global_control^1^sw_core_shipping_option_not_3480^SW_Global_06_swrs_preinstall_languages_control^1^sw_core_preinst_language_korean^SW_Global_06_swrs_cultural_languages_control^1^sw_core_cultural_std_language^SW_Global_06_swrs_support_global_preference_control^1^sw_9by5_support_service^
+07   No CPUSIU for the following products                                            
+011INITIAL ORDER CONFIGURATION                                                       
+060051001MDDSW_TYPE^1^RS^SW_MODEL^2^^pSeries or RS^
+083555 E3A    11899       11900       17002       19844       19848       19906       1AGK2       3AGKM       3AKNC       1
+953555E3A                   000000000                        0                    20250418                                                    TS4300 Tape Expansion Module                
+060472001MDDIBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^ssd_3555_L_Cabinets 0x00000297E412CFC0 [ssd_3555_l3a_cabinet]^SHIPPING_FEATURECODE^1^AKNC^SERVICE_INTEGRATOR_RELATED_HW^1^3555E3A-1-9^SB_RELATED_HW^1^3555E3A-1-9^HB_RELATED_HW^1^3555E3A-1-9^IBM_MTM_CONTEXTS_MC^4^ssd_3555_e3a_cabinet^ibm_INITIAL^ibm_region_ap^ibm_country_korea^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^4^3^1^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^4^ssd_3555_AGKM^ssd_3555_1900^ssd_3555_AKNC^ssd_3555_AKCH^
+060042001BED1^1^01F3FFFFFF68^01F3FFFFFF68^
+961899                                            First Power Supply                          
+961900                                            Additional Power Supply                     
+967002                                            Rack Mount Kit                              
+969844                                            2.8M Power Cord 250V Korea                  
+969848                                            Rack to PDU line cord                       
+969906                      N                     New order install                           
+96AGK2                                            25 meter OM3 fiber Cable (LC)               
+96AGKM                                            LTO 8 HH Fibre channel drive                
+96AKNC                                            Premium S&H Indicator                       
+083555 L3A    11411       11900       17002       19002       19600       19848       1AGK2       3AGKM       3AGL0       1AKNC       1
+953555L3A                   000000000                        0                    20250418                                                    TS4300 Tape Base Module                     
+060648001MDDibm_id_S^1^ssd_3555_L_Cabinets 0x00000297E412CFC0 [ssd_3555_l3a_cabinet]^IBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^SSD_Leaf_Category 0x00000297E4129600 [SBO_ATL_SSD]^SHIPPING_FEATURECODE^1^AKNC^SERVICE_INTEGRATOR_RELATED_HW^1^3555L3A-1-6^SB_RELATED_HW^1^3555L3A-1-6^HB_RELATED_HW^1^3555L3A-1-6^IBM_MTM_CONTEXTS_MC^4^ssd_3555_l3a_cabinet^ibm_INITIAL^ibm_region_ap^ibm_country_korea^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^11^0^3^3^0^0^1^1^1^0^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^11^ssd_3555_AGLA^ssd_3555_AGKM^ssd_3555_AGK2^ssd_3555_AGK1^ssd_3555_1682^ssd_3555_7002^ssd_3555_1900^ssd_3555_9600^ssd_3555_9213^ssd_3555_AKNC^ssd_3555_AKCH^
+060042001BED1^2^01F3FFFFFD18^01F3FFFFFD18^
+961411                                            Fibre Tape Drive Wrap Tool                  
+961900                                            Additional Power Supply                     
+967002                                            Rack Mount Kit                              
+969002                      N                     First Expansion unit                        
+969600                      N                     Attached to IBM AIX System                  
+969848                                            Rack to PDU line cord                       
+96AGK2                                            25 meter OM3 fiber Cable (LC)               
+96AGKM                                            LTO 8 HH Fibre channel drive                
+96AGL0                                            GEN-3 Base Module                           
+96AKNC                                            Premium S&H Indicator                       
+083589 004    14001       14005       1AKNC       1
+953589004                   000000000                        0                    20250418                                                    Ultrium cleaning cartridges                 
+060438001MDDIBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^ssd_3555_L_Cabinets 0x00000297E412CFC0 [ssd_3555_l3a_cabinet]^SHIPPING_FEATURECODE^1^AKNC^SERVICE_INTEGRATOR_RELATED_HW^1^3589004-1-7^PEMA_RELATED_HW^1^3589004-1-7^IBM_MTM_CONTEXTS_MC^4^ssd_3589_004^ibm_INITIAL^ibm_region_ap^ibm_country_korea^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^4^1^1^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^4^ssd_3589_4005^ssd_3589_4001^ssd_3599_AKNC^ssd_3599_AKCH^
+060042001BED1^3^01F3FFFFFF68^01F3FFFFFF68^
+964001                                            Ultrium Single Cleaning Cartridge           
+964005                                            5-pack Ultrium cleaning cartridge           
+96AKNC                                            Premium S&H Indicator                       
+083589 552    15502       19003       19022       19110       19200       19300       19400       19500       19600       19910       1AKNC       1
+953589552                   000000000                        0                    20250418                                                    12 TB Ultrium 8 Tape Cartridge 20-pack Labeled 
+060367001MDDIBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^ssd_3555_L_Cabinets 0x00000297E412CFC0 [ssd_3555_l3a_cabinet]^SHIPPING_FEATURECODE^1^AKNC^SERVICE_INTEGRATOR_RELATED_HW^1^3589552-1-8^IBM_MTM_CONTEXTS_MC^4^ssd_3589_552^ibm_region_ap^ibm_country_korea^ibm_INITIAL^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^1^ssd_system_component^
+060042001BED1^4^01F3FFFFFF60^01F3FFFFFF60^
+965502                                            12 TB Labeled 20-pack                       
+969003                      N                     Label background color Red                  
+969022                      N                     Color/vibrant background                    
+969110                      N                     First character of Volser is A              
+969200                      N                     Second character of Volser is 0             
+969300                      N                     Third character of Volser is 0              
+969400                      N                     Fourth character of Volser is 0             
+969500                      N                     Fifth character of Volser is 0              
+969600                      N                     Sixth character of Volser is 0              
+969910                      N                     Base 10 Count LBL Sequence                  
+96AKNC                                            Premium S&H Indicator                       
+98   63
+993386390122
+]]></CFReportBLOB>
+  </CFData>
+</CFXML>

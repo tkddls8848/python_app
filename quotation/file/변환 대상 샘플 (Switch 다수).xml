@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE CFXML [
+            <!ELEMENT CFXML (thisDocumentGenerationDateTime,thisDocumentIdentifier,CFData)>
+            <!ELEMENT thisDocumentGenerationDateTime (DateTimeStamp)>
+            <!ELEMENT thisDocumentIdentifier (ProprietaryDocumentIdentifier)>
+            <!ELEMENT CFData (ProprietaryInformation*,ProprietaryShippingInformation?,ProductLineItem+,CFReportBLOB?)>
+            <!ELEMENT ProprietaryShippingInformation (Name, FinancialAmount)>
+            <!ELEMENT ShippingUnitListPrice (FinancialAmount, PriceTerm)>
+            <!ELEMENT DateTimeStamp (#PCDATA)>
+            <!ELEMENT ProprietaryDocumentIdentifier (#PCDATA)>
+            <!ELEMENT ProprietaryInformation (Name,Value)>
+            <!ELEMENT ProductLineItem (  ProductLineNumber , TransactionType , CPUSIUvalue , ConfigurationControlNumber?, ProprietaryGroupIdentifier , ServicePacLineNumberReference? , Quantity  , ProductIdentification , UnitListPrice? , ShippingUnitListPrice? , MaintenanceUnitListPrice? , ProductSubLineItem* ) >
+            <!ELEMENT CFReportBLOB  (#PCDATA)>
+            <!ELEMENT Name  (#PCDATA)>
+            <!ELEMENT Value (#PCDATA)>
+            <!ELEMENT CPUSIUvalue (#PCDATA)>
+            <!ELEMENT ConfigurationControlNumber (#PCDATA)>
+            <!ELEMENT ProductLineNumber (#PCDATA)>
+            <!ELEMENT ProprietaryGroupIdentifier (#PCDATA)>
+            <!ELEMENT ServicePacLineNumberReference (#PCDATA)>
+            <!ELEMENT Quantity (#PCDATA)>
+            <!ELEMENT TransactionType (#PCDATA)>
+            <!ELEMENT ProductIdentification (PartnerProductIdentification*) >
+            <!ELEMENT ProductSubLineItem ( LineNumber, TransactionType, Quantity , ExchangeAddSubLineItemNumber? , ProductIdentification, UnitListPrice?,MaintenanceUnitListPrice?)>
+            <!ELEMENT UnitListPrice ( FinancialAmount, PriceTerm)>
+            <!ELEMENT MaintenanceUnitListPrice (FinancialAmount, PriceTerm)>
+            <!ELEMENT PartnerProductIdentification ( OrderedProductIdentifier?, ProprietaryProductIdentifier, ProductDescription?, ProductTypeCode?, ProductIdentifierTypeCode?) >
+            <!ELEMENT LineNumber (#PCDATA)>
+            <!ELEMENT ExchangeAddSubLineItemNumber (#PCDATA)>
+            <!ELEMENT FinancialAmount ( GlobalCurrencyCode, MonetaryAmount )>
+            <!ELEMENT PriceTerm (#PCDATA)>
+            <!ELEMENT OrderedProductIdentifier (#PCDATA)>
+            <!ELEMENT ProprietaryProductIdentifier (#PCDATA)>
+            <!ELEMENT ProductDescription (#PCDATA)>
+            <!ELEMENT ProductTypeCode (#PCDATA)>
+            <!ELEMENT ProductIdentifierTypeCode (#PCDATA)>
+            <!ELEMENT GlobalCurrencyCode (#PCDATA)>
+            <!ELEMENT MonetaryAmount (#PCDATA)>
+            
+]>
+<CFXML>
+  <thisDocumentGenerationDateTime>
+    <DateTimeStamp>02:35:38</DateTimeStamp>
+  </thisDocumentGenerationDateTime>
+  <thisDocumentIdentifier>
+    <ProprietaryDocumentIdentifier>CFXML.switch m.2025-05-09T00:00:00+00:00</ProprietaryDocumentIdentifier>
+  </thisDocumentIdentifier>
+  <CFData>
+    <ProprietaryInformation>
+      <Name>CFXML</Name>
+      <Value>1.0</Value>
+    </ProprietaryInformation>
+    <ProprietaryInformation>
+      <Name>Configurator Identifier</Name>
+      <Value>ECMSSD.90501a251073</Value>
+    </ProprietaryInformation>
+    <ProprietaryInformation>
+      <Name>Price File Date</Name>
+      <Value>2025-05-09</Value>
+    </ProprietaryInformation>
+    <ProprietaryInformation>
+      <Name>Checksum</Name>
+      <Value>1785116022</Value>
+    </ProprietaryInformation>
+    <ProprietaryShippingInformation>
+      <Name>Total Non-discountable Shipping and Handling Charge</Name>
+      <FinancialAmount>
+        <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+        <MonetaryAmount>1,494.63</MonetaryAmount>
+      </FinancialAmount>
+    </ProprietaryShippingInformation>
+    <ProductLineItem>
+      <ProductLineNumber>1000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>1</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>1000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>8960-P64</ProprietaryProductIdentifier>
+          <ProductDescription>IBM Storage Networking SAN64B-7</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>0</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>373.66</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <MaintenanceUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>1,221.87</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>Y</PriceTerm>
+      </MaintenanceUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>1001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>2634</ProprietaryProductIdentifier>
+            <ProductDescription>P64 24 x 32Gbps SW SFP Bundle</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>146,272.4</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>1002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKCH</ProprietaryProductIdentifier>
+            <ProductDescription>Standard S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>2000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>1</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>2000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>8969-P96</ProprietaryProductIdentifier>
+          <ProductDescription>IBM Storage NetworkingSAN 128B-7</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>0</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>373.66</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>2001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>2664</ProprietaryProductIdentifier>
+            <ProductDescription>P96 48 x 64Gbps SW SFP Bundle</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>676,117.7</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKCH</ProprietaryProductIdentifier>
+            <ProductDescription>Standard S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2003</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>ALH0</ProprietaryProductIdentifier>
+            <ProductDescription>Expert Care Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>2004</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>ALK5</ProprietaryProductIdentifier>
+            <ProductDescription>EC Advanced 5 Year</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>3000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>2000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>8883-A05</ProprietaryProductIdentifier>
+          <ProductDescription>5 year IBM Storage Expert Care Advanced</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>138,604.13</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>4000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>2000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>5775-STG</ProprietaryProductIdentifier>
+          <ProductDescription>Support Line for Storage - 5 Year</ProductDescription>
+          <ProductTypeCode>Software</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>N/C</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>4001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>0526</ProprietaryProductIdentifier>
+            <ProductDescription>Support per Server (N/C)</ProductDescription>
+            <ProductTypeCode>Software</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>5000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>1</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>5000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>8969-P96</ProprietaryProductIdentifier>
+          <ProductDescription> copy 1:IBM Storage NetworkingSAN 128B-7</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>0</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>373.66</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>5001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>2664</ProprietaryProductIdentifier>
+            <ProductDescription>P96 48 x 64Gbps SW SFP Bundle</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>676,117.7</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>5002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKCH</ProprietaryProductIdentifier>
+            <ProductDescription>Standard S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>5003</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>ALH0</ProprietaryProductIdentifier>
+            <ProductDescription>Expert Care Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>5004</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>ALK5</ProprietaryProductIdentifier>
+            <ProductDescription>EC Advanced 5 Year</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>6000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>5000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>8883-A05</ProprietaryProductIdentifier>
+          <ProductDescription> copy 1:5 year IBM Storage Expert Care Advanced</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>138,604.13</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>7000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>0</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>5000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>5775-STG</ProprietaryProductIdentifier>
+          <ProductDescription>Support Line for Storage - 5 Year</ProductDescription>
+          <ProductTypeCode>Software</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>N/C</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>7001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>0526</ProprietaryProductIdentifier>
+            <ProductDescription>Support per Server (N/C)</ProductDescription>
+            <ProductTypeCode>Software</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>N/C</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <ProductLineItem>
+      <ProductLineNumber>8000</ProductLineNumber>
+      <TransactionType>NEW</TransactionType>
+      <CPUSIUvalue>1</CPUSIUvalue>
+      <ProprietaryGroupIdentifier>8000</ProprietaryGroupIdentifier>
+      <Quantity>1</Quantity>
+      <ProductIdentification>
+        <PartnerProductIdentification>
+          <OrderedProductIdentifier>N/A</OrderedProductIdentifier>
+          <ProprietaryProductIdentifier>8960-P64</ProprietaryProductIdentifier>
+          <ProductDescription> copy 1:IBM Storage Networking SAN64B-7</ProductDescription>
+          <ProductTypeCode>Hardware</ProductTypeCode>
+          <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+        </PartnerProductIdentification>
+      </ProductIdentification>
+      <UnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>0</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </UnitListPrice>
+      <ShippingUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>373.66</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>0</PriceTerm>
+      </ShippingUnitListPrice>
+      <MaintenanceUnitListPrice>
+        <FinancialAmount>
+          <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+          <MonetaryAmount>1,221.87</MonetaryAmount>
+        </FinancialAmount>
+        <PriceTerm>Y</PriceTerm>
+      </MaintenanceUnitListPrice>
+      <ProductSubLineItem>
+        <LineNumber>8001</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>2634</ProprietaryProductIdentifier>
+            <ProductDescription>P64 24 x 32Gbps SW SFP Bundle</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>146,272.4</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+      <ProductSubLineItem>
+        <LineNumber>8002</LineNumber>
+        <TransactionType>ADD</TransactionType>
+        <Quantity>1</Quantity>
+        <ProductIdentification>
+          <PartnerProductIdentification>
+            <OrderedProductIdentifier></OrderedProductIdentifier>
+            <ProprietaryProductIdentifier>AKCH</ProprietaryProductIdentifier>
+            <ProductDescription>Standard S&amp;H Indicator</ProductDescription>
+            <ProductTypeCode>Hardware</ProductTypeCode>
+            <ProductIdentifierTypeCode>MTM-FC</ProductIdentifierTypeCode>
+          </PartnerProductIdentification>
+        </ProductIdentification>
+        <UnitListPrice>
+          <FinancialAmount>
+            <GlobalCurrencyCode>KWON</GlobalCurrencyCode>
+            <MonetaryAmount>0</MonetaryAmount>
+          </FinancialAmount>
+          <PriceTerm>0</PriceTerm>
+        </UnitListPrice>
+      </ProductSubLineItem>
+    </ProductLineItem>
+    <CFReportBLOB><![CDATA[
+003120250509ECMSSD  90501a251073AP7660023                                                                                                   KRko                     00                                                                                                                                                
+030Unclassified          
+05         00                                                               
+05         00    CEID: 10ailnjz
+05         10                                                               
+05         10   Created on Sa May 10 2025 02:35:38 GMT+0900 (UTC) by Sang In
+05         00   Park                                                        
+05         1U   You have selected IBM Storage Expert Care for your Client.  
+05         1U   Note: Only in enclosed city list and <50 KM of CBD, 24/48/72
+05         0U   hours committed fix can be sold without additional delivery 
+05         0U   approval.                                                   
+05         10   Customer Requested Arrival Date: 2025/05/24                 
+060969001MDDIBM_INC_SHIPPING^1^YES^IBM_FV_VISIBLE^1^FALSE^SV_DEFAULT_CATEGORIES^0^SW_Global_06_swrs_cho_global_preference_control^1^sw_core_otc_charge_option^SW_Global_06_swrs_media_global_preference_control^1^swn_esd_media^SW_Global_06_swrs_language_global_preference_control^1^sw_core_language_prim_korean^SW_Global_06_swrs_maintenance_global_preference_control^1^sw_core_nim_maint_3yr^SW_Global_06_swrs_shipping_options_global_control^1^sw_core_shipping_option_3444^SW_Global_06_swrs_expedite_global_control^1^sw_core_shipping_option_no_expedite^SW_Global_06_swrs_suppress_global_control^1^sw_core_shipping_option_not_3480^SW_Global_06_swrs_preinstall_languages_control^1^sw_core_preinst_language_korean^SW_Global_06_swrs_cultural_languages_control^1^sw_core_cultural_std_language^SW_Global_06_swrs_support_global_preference_control^1^sw_9by5_support_service^IBM_WITHDRAWN_PRODUCTS_MODE^1^FALSE^IBM_REDUCED_SEV_MSG_MS^1^sw_577x_cognitive_proactive_must_read_message^
+07                                                   8960P64                         
+011INITIAL ORDER CONFIGURATION                                                       
+060110001MDDIBM_PLATFORM^1^All^ssd_original_cpu_mtm_id_S^1^SSD_8960_F64_N64 0x0000048A8827F000 [ssd_8960_P64]^
+088960 P64    12634       1AKCH       1
+958960P64                   000000000            T           1                    20250524                                                    IBM Storage Networking SAN64B-7             
+060472001MDDIBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^SSD_IBM_SAN_Leaf_Category 0x0000048A8827D740 [SBO_IBM_SAN_SSD]^SSD_2498_PUREPOWER^3^0^0^0^SSD_2109_PORTS^2^0^0^SHIPPING_FEATURECODE^1^AKCH^SERVICE_INTEGRATOR_RELATED_HW^1^8960P64-2-5^SB_RELATED_HW^1^8960P64-2-5^HB_RELATED_HW^1^8960P64-2-5^IBM_MTM_CONTEXTS_MC^4^ibm_region_ap^ibm_country_korea^ibm_INITIAL^ssd_8960_P64^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^1^ssd_system_component^
+060042001BED2^9^01F3FFFFFCD0^01F3FFFFFCD0^
+962634                                            P64 24 x 32Gbps SW SFP Bundle               
+96AKCH                                            Standard S&H Indicator                      
+07                                                   8969P96                         
+011INITIAL ORDER CONFIGURATION                                                       
+060555001MDDIBM_PLATFORM^1^All^SWN_CATEGORIES_MC^1^ibm_sw_core_category_otherstorage^sw_rs_5775_stg:new_maintenance^1^sw_core_nim_maint_3yr^SWN_CONTEXT_SOFTWARE_OBJECTS_KEY_S^1^ibm_all_platform_type:All::DEFAULT:{}:FALSE:DEFAULT:{}:DEFAULT:DEFAULT:::FALSE:0:_:DEFAULT:FALSE:FALSE:FALSE:0:DEFAULT:{}^SWN_PROCESSED_SOFTWARE_OBJECTS_KEY_S^1^sw_5775_stg_fs5200_default_and_require_provider_group^SW_TYPE^1^All^ssd_original_cpu_mtm_id_S^1^SSD_8960_F64_N64 0x0000048A8827D680 [ssd_8969_P96]^swn_verify_auto_added_recommended_software_message_displayed_B^1^TRUE^
+088969 P96    12664       1AKCH       1ALH0       1ALK5       1
+958969P96                   000000000            T           1                    20250524                                                    IBM Storage NetworkingSAN 128B-7            
+060443001MDDTIER_NEEDTOBETOTALED^1^YES^IBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^SSD_IBM_SAN_Leaf_Category 0x0000048A8827D740 [SBO_IBM_SAN_SSD]^SSD_2498_PUREPOWER^3^0^0^0^SSD_2109_PORTS^2^0^0^SHIPPING_FEATURECODE^1^AKCH^SERVICE_INTEGRATOR_RELATED_HW^1^8969P96-3-4^IBM_MTM_CONTEXTS_MC^4^ibm_region_ap^ibm_country_korea^ibm_INITIAL^ssd_8969_P96^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^1^ssd_system_component^
+060043001BED3^10^01F3FFFFFDD8^01F3FFFFFDD8^
+962664                                            P96 48 x 64Gbps SW SFP Bundle               
+96AKCH                                            Standard S&H Indicator                      
+96ALH0                      N                     Expert Care Indicator                       
+96ALK5                      N                     EC Advanced 5 Year                          
+088883 A05    1
+958883A05                   000000000            T           0                    20250524                                                    5 year IBM Storage Expert Care Advanced     
+060118001MDDTIER_MAINTENANCEPRODUCT^1^YES^BASE_SERVICES_INTEGRATOR_TAG^1^^SERVICE_INTEGRATOR_RELATED_HW^1^8969P96-3-4^
+060041001BED3^^01F3FFFFFE18^01F3FFFFFE18^
+475775STG    10526       1
+955775STG                   000000000           NT           0                    20250524                                                    Support Line for Storage - 5 Year                           
+060104001MDDSWN_MTM_CONTEXTS_MC^4^ibm_region_ap^ibm_country_korea^sw_software_p_series_type^ibm_INITIAL^
+060043001BED3^13^01F3FFFFFED8^01F3FFFFFED8^
+960526                      N                     Support per Server (N/C)                                    
+07   : copy 1                                        8969P96                         
+011INITIAL ORDER CONFIGURATION                                                       
+060578001MDDIBM_PLATFORM^1^All^SWN_CATEGORIES_MC^1^ibm_sw_core_category_otherstorage^sw_rs_5775_stg:new_maintenance^1^sw_core_nim_maint_3yr^SWN_CONTEXT_SOFTWARE_OBJECTS_KEY_S^1^ibm_all_platform_type:All::DEFAULT:{}:FALSE:DEFAULT:{}:DEFAULT:DEFAULT:::FALSE:0:_:DEFAULT:FALSE:FALSE:FALSE:0:DEFAULT:{}^SWN_PROCESSED_SOFTWARE_OBJECTS_KEY_S^1^sw_5775_stg_fs5200_default_and_require_provider_group^SW_TYPE^1^All^swn_verify_auto_added_recommended_software_message_displayed_B^1^TRUE^ssd_siu_index_S^1^1^ssd_my_original_cpu_mtm_id_S^1^SSD_8960_F64_N64 0x0000048A8827D680 [ssd_8969_P96]^
+088969 P96    12664       1AKCH       1ALH0       1ALK5       1
+958969P96                   000000000            T           1                    20250524                                                    IBM Storage NetworkingSAN 128B-7            
+060504001MDDssd_mtm_index_S^1^1^TIER_NEEDTOBETOTALED^1^YES^IBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^SSD_IBM_SAN_Leaf_Category 0x0000048A8827D740 [SBO_IBM_SAN_SSD]^SSD_2498_PUREPOWER^3^0^0^0^SSD_2109_PORTS^2^0^0^SHIPPING_FEATURECODE^1^AKCH^SERVICE_INTEGRATOR_RELATED_HW^1^SSD_8960_F64_N64 0x0000048A8827D680 [ssd_8969_P96]:1^IBM_MTM_CONTEXTS_MC^4^ibm_region_ap^ibm_country_korea^ibm_INITIAL^ssd_8969_P96^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^1^ssd_system_component^
+060042001BED21^^01F3FFFFFF80^01F3FFFFFF80^
+962664                                            P96 48 x 64Gbps SW SFP Bundle               
+96AKCH                                            Standard S&H Indicator                      
+96ALH0                      N                     Expert Care Indicator                       
+96ALK5                      N                     EC Advanced 5 Year                          
+088883 A05    1
+958883A05                   000000000            T           0                    20250524                                                    5 year IBM Storage Expert Care Advanced     
+060179001MDDssd_mtm_index_S^1^3^TIER_MAINTENANCEPRODUCT^1^YES^BASE_SERVICES_INTEGRATOR_TAG^1^^SERVICE_INTEGRATOR_RELATED_HW^1^SSD_8960_F64_N64 0x0000048A8827D680 [ssd_8969_P96]:1^
+060042001BED21^^01F3FFFFFCD8^01F3FFFFFCD8^
+475775STG    10526       1
+955775STG                   000000000           NT           0                    20250524                                                    Support Line for Storage - 5 Year                           
+060124001MDDssd_mtm_index_S^1^2^SWN_MTM_CONTEXTS_MC^4^ibm_region_ap^ibm_country_korea^sw_software_p_series_type^ibm_INITIAL^
+060042001BED21^^01F3FFFFFED8^01F3FFFFFED8^
+960526                      N                     Support per Server (N/C)                                    
+07   : copy 1                                        8960P64                         
+011INITIAL ORDER CONFIGURATION                                                       
+060133001MDDIBM_PLATFORM^1^All^ssd_siu_index_S^1^1^ssd_my_original_cpu_mtm_id_S^1^SSD_8960_F64_N64 0x0000048A8827F000 [ssd_8960_P64]^
+088960 P64    12634       1AKCH       1
+958960P64                   000000000            T           1                    20250524                                                    IBM Storage Networking SAN64B-7             
+060615001MDDssd_mtm_index_S^1^1^IBM_MTM_NAME^1^^SSD_RACK_CB^1^2^ibm_parent_id_S^1^SSD_IBM_SAN_Leaf_Category 0x0000048A8827D740 [SBO_IBM_SAN_SSD]^SSD_2498_PUREPOWER^3^0^0^0^SSD_2109_PORTS^2^0^0^SHIPPING_FEATURECODE^1^AKCH^SERVICE_INTEGRATOR_RELATED_HW^1^SSD_8960_F64_N64 0x0000048A8827F000 [ssd_8960_P64]:1^SB_RELATED_HW^1^SSD_8960_F64_N64 0x0000048A8827F000 [ssd_8960_P64]:1^HB_RELATED_HW^1^SSD_8960_F64_N64 0x0000048A8827F000 [ssd_8960_P64]:1^IBM_MTM_CONTEXTS_MC^4^ibm_region_ap^ibm_country_korea^ibm_INITIAL^ssd_8960_P64^SSD_MTM_EXPLICIT_SELECTION_QTYS_MF^1^0^SSD_MTM_EXPLICIT_SELECTION_MC^1^ssd_system_component^
+060042001BED25^^01F3FFFFFF08^01F3FFFFFF08^
+962634                                            P64 24 x 32Gbps SW SFP Bundle               
+96AKCH                                            Standard S&H Indicator                      
+98   72
+991785116022
+]]></CFReportBLOB>
+  </CFData>
+</CFXML>

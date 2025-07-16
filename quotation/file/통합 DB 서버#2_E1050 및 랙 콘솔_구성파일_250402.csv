@@ -1,0 +1,323 @@
+﻿"Output File Name: DB1_E1050_250402 (1).csv"
+"","","","Server 1"
+
+"Date : 04/02/2025","","","","","ECMPWR Version : 31"
+"Time : 13:36:33","","","","","Last Build : April 1, 2025"
+"CFREPORT :  DB1_E1050_250402 (1).cfr"
+"Currency : KWON"
+"Hardware Price File : KR KWON Thousands won Commercial--POWER 04/02/2025"
+"Software Price File : KR KWON Thousands won Commercial--POWER 04//02/2025"
+
+"This configurator is classified for proposal usage for IBM personnel"
+"and Business Partners only.  The configurator USER must provide"
+"complete and accurate information in order to produce a valid"
+"upgrade system order or proposal.  The user will be held responsible"
+"for verifying that the price, terms, and conditions are consistent"
+"with the current sales manual.  Commitments on prices should not be"
+"made without complete verification with the sales manuals. Prices"
+"are for your information only and are subject to change. Applicable"
+"taxes are not shown."
+
+
+"********************  USER SELECTED/CRITICAL MESSAGES  ********************"
+" CEID: 10ailnjz                                                            "
+"Created on We Apr 02 2025 13:36:33 GMT+0900 (UTC) by Sang In               "
+"Park                                                                       "
+
+"*** This is a POWER SYSTEMS MACHINE - Please see System                    "
+"comments for the Operating System(s) ordered ***                           "
+
+
+"*******************************  HARDWARE  *******************************"
+
+"Product","Description","Qty","Purchase","","","","Maint","","","",""
+
+"9043-MRX","Server 1:9043 Model MRX","1","265131.6","","","","","","","",""
+"0265","AIX Partition Specify","2","0","","","","","","","",""
+"2146","Primary OS - AIX","1","0","","","","","","","",""
+"4558","Power Cord To PDU/UPS, (100-240V/16A)","4","375.6","","","","","","","",""
+"4649","Rack Integration Services","1","1005.3","","","","","","","",""
+"4651","Rack Indicator, Rack #1","1","0","","","","","","","",""
+"5000","Software Preload Required","1","0","","","","","","","",""
+"6577","Power Cable - Drawer to IBM PDU, 200-240V/10A","2","187.8","","","","","","","",""
+"9440","New AIX License Core Counter","26","0","","","","","","","",""
+"9716","Language Group Specify - Korean","1","0","","","","","","","",""
+"AKNC","Premium S&H Indicator","1","0","","","","","","","",""
+"EB39","Power Supply - 2300W for Server (200-240 VAC)","4","32169.2","","","","","","","",""
+"EB46","10GbE Optical Transceiver SFP+ SR","12","4425.6","","","","","","","",""
+"EC72","PCIe4 2-Port 25/10/1 GbE RoCE SFP28 Adapter","6","78711.6","","","","","","","",""
+"EC7T","800GB Mainstream NVMe U.2 SSD 4k for AIX/Linux","8","69647.2","","","","","","","",""
+"ECLS","3.0M CXP x16 Copper Cable Pair for PCIe4 Expansion Drawer","2","12063.4","","","","","","","",""
+"ECW0","Optical Wrap Plug","6","403.2","","","","","","","",""
+"EHSD","Power AIX Segment Indicator","1","0","","","","","","","",""
+"EJ0Q","Storage NVMe Backplan","1","0","","","","","","","",""
+"EJ2A","PCIe4 x16 to CXP Converter Adapter (support AOC)","2","23456.8","","","","","","","",""
+"EMCD","512 of #EMCA 1GB Memory Activations for MRX","1","83825","","","","","","","",""
+"EMFH","64GB (2 x 32GB) DDR5 Memory DDIMM","12","482420.4","","","","","","","",""
+"EN1L","PCIe4 32Gb 4-port Optical Fibre Channel Adapter","6","317628","","","","","","","",""
+"ENZ0","PCIe Gen4 I/O Expansion Drawer","1","39371.9","","","","","","","",""
+"ENZF","PCIe4 6-Slot Fanout Module for PCIe Gen4 I/O Expansion Drawer","2","75462.2","","","","","","","",""
+"EPEU","12-core Typical 3.35 to 4.0 GHZ (max) processor","4","543653.6","","","","","","","",""
+"EPLU","Front Heatsink + TIM PAD (For MRX)","2","6702","","","","","","","",""
+"EPLV","Rear Heatsink + TIM PAD (For MRX)","2","6702","","","","","","","",""
+"EPUR","1 core Processor Activation for #EPEU","26","278800.6","","","","","","","",""
+"EPVW","PowerVM V4","26","0","","","","","","","",""
+"ES30","PCIe3 SAS Tape Adapter Quad-port 6Gb x8","2","18009.4","","","","","","","",""
+"ESWK","AIX Update Access Key (UAK)","39","0","","","","","","","",""
+"EUA5","Standalone USB DVD drive w/cable","1","663.7","","","","","","","",""
+"","","","=========","","","",""
+"","9043-MRX Price","","2340816.1","","","","","","",""
+
+"","Non-discountable Shipping and Handling Charge","","2215.61"
+
+"7226-1U3","Multi-media Storage Enclosure","1","4589.5","","","","MULT","","","",""
+"8002","Ultrium Cleaning Cartridge","1","240.6","","","","","","","",""
+"8541","HHLTO8 SAS Tape Drive","2","32155","","","","","","","",""
+"8806","Ultrium 8 Data Cartridge (5-Pack)","2","3275","","","","","","","",""
+"9600","Attached to AIX System","1","N/C","","","","","","","",""
+"9848","Rack Device to PDU Cord","1","53.7","","","","","","","",""
+"9849","5.5m Mini-SAS/Mini-SAS 1x Cable","2","N/C","","","","","","","",""
+"AKNC","Premium S&H Indicator","1","0","","","","","","","",""
+"","","","=========","","","","=========","","","",""
+"","7226-1U3 Price","","40313.8","","","","","","",""
+"","One-time Maintenance","","","","","","309","","","",""
+"","Annual Maintenance","","","","","","1316.7","","","",""
+
+"","Non-discountable Shipping and Handling Charge","","149.75"
+
+"7965-S42","Rack 1:7965-S42 2.0M POWER RACK","1","9457.9","","","","MULT","","","",""
+"0274","Rack Content Specify 7214-1U2, 7216-1U2 or 7226-1U3 -1 EIA unit","1","N/C","","","","","","","",""
+"4651","Rack Indicator, Rack #1","3","N/C","","","","","","","",""
+"6656","4.3m (14-Ft) 1PH/32A Power Cord","4","1879.2","","","","","","","",""
+"7188","Power Distribution Unit","2","5182.4","","","","","","","",""
+"AKNC","Premium S&H Indicator","1","0","","","","","","","",""
+"ECJJ","High Function 9xC19 Single-Phase or Three-Phase Wye PDU plus","2","7255.4","","","","","","","",""
+"ECRG","Rear Door IBM/OEM Flat for S42 Rack","1","1425.2","","","","","","","",""
+"ECRJ","Rack Side Cover","2","2228.6","","","","","","","",""
+"ECRK","Rack Rear Extension 5-In","1","1490","","","","","","","",""
+"ER0K","Rack Content Specify: 7316-TF5 -1 EIA","1","N/C","","","","","","","",""
+"ER14","Rack Content Specify 1U Horizontal PDU - 1 EIA","4","N/C","","","","","","","",""
+"ER2B","Reserve 2U at Bottom of Rack","1","N/C","","","","","","","",""
+"ER3E","RACK CONTENT SPECIFY: 9043-MRX 4EIA","1","0","","","","","","","",""
+"ERCN","Rack Content Specify: 7063-CR2 - 1EIA","1","N/C","","","","","","","",""
+"ERCU","Rack Content Specify FC ENZ0 - 4EIA","1","N/C","","","","","","","",""
+"ERLR","Left/Right PDU Redundancy","1","0","","","","","","","",""
+"","","","=========","","","","=========","","","",""
+"","7965-S42 Price","","28918.7","","","","","","",""
+"","One-time Maintenance","","","","","","227","","","",""
+"","Monthly Maintenance","","","","","","63","","","",""
+
+"","Non-discountable Shipping and Handling Charge","","4519.64"
+
+"5313-HPO","IBM Power Software HIPO","1","N/C","","","","","","","",""
+"0654","9043-MRX Routing Code","1","N/C","","","","","","","",""
+"0967","Base OS","1","N/C","","","","","","","",""
+"1073","OS Specify code for AIX 7.3","1","N/C","","","","","","","",""
+"5000","Preload","1","N/C","","","","","","","",""
+"5986","Korean Preinstall PII Language","1","N/C","","","","","","","",""
+"9210","HW is Rack integrated","1","N/C","","","","","","","",""
+"","","","=========","","","",""
+"","5313-HPO Price","","0","","","","","","",""
+
+"","Non-discountable Shipping and Handling Charge","","0"
+
+"*******************************  SOFTWARE  *******************************"
+
+"Product","Description","Qty","License","","","","","","","",""
+
+"5692-A6P","System Software","1","N/C","","","","","","","",""
+"1101","DVD Process No Charge","1","N/C","","","","","","","",""
+"2282","IBM PowerVM V4 VIOS","1","N/C","","","","","","","",""
+"2284","IBM PowerVM V4 Expansion Pack","1","N/C","","","","","","","",""
+"2324","NovaLink (5765-PVS/PVE/VE3/VE4)","1","N/C","","","","","","","",""
+"2375","AIX 7.3 Base Install","1","N/C","","","","","","","",""
+"2376","AIX 7.3 Expansion Pack","1","N/C","","","","","","","",""
+"2377","AIX 7.3 Standard Edition Specify (5765-G98)","1","N/C","","","","","","","",""
+"3435","DVD/CD-ROM","1","N/C","","","","","","","",""
+"3450","Electronic Delivery","1","N/C","","","","","","","",""
+"","","","=========","","","",""
+"","5692-A6P Price","","0","","","","","","",""
+
+
+"5765-G98","IBM AIX 7 Standard Edition","1","N/C","","","","","","","",""
+"2377","AIX 7.3 Standard Edition Specify","1","N/C","","","","","","","",""
+"3500","Preload Specifier","1","N/C","","","","","","","",""
+"C1AT","Per Processor Power - Small","26","53989","","","","","","","",""
+"","","","=========","","","",""
+"","5765-G98 Price","","53989","","","","","","",""
+
+
+"5773-SM3","3-Year SWMA for 5765-C34/E61/E62/G03/G62/G98","1","N/C","","","","","","","",""
+"1252","Per Processor 3 Yr SWMA Small Power Reg","26","40492.4","","","","","","","",""
+"","","","=========","","","",""
+"","5773-SM3 Price","","40492.4","","","","","","",""
+
+
+"5765-VE4","IBM PowerVM V4","1","N/C","","","","","","","",""
+"C3TG","Per Proc Core Small N/C HSE","26","N/C","","","","","","","",""
+"","","","=========","","","",""
+"","5765-VE4 Price","","0","","","","","","",""
+
+
+"5773-PVE","3-Year SWMA for PowerVM","1","N/C","","","","","","","",""
+"A0NH","Per Proc SW Maint Registration (Small)","26","31551","","","","","","","",""
+"","","","=========","","","",""
+"","5773-PVE Price","","31551","","","","","","",""
+
+
+"*****************************  GRAND TOTALS  *****************************"
+
+"","Hardware Price","","2410048.6"
+"","One-time Maintenance","","536"
+"","Software OTC","","126032.4"
+"","","","========="
+"","System Total","","2536617"
+"","Non-discountable Shipping and Handling Charge","","6885"
+"","Monthly Maintenance","","","","","","63"
+"","Annual Maintenance","","","","","","1316.7"
+
+"N/O  - Not Offered"
+"N/A  - Price Not Available in Price Database"
+"N/C  - No Charge"
+"A    - Annual Maintenance Price"
+"W/D  - WITHDRAWN"
+"F    - ESA 24x7 Full Coverage"
+"P    - ESA 9x5 Prime Coverage"
+
+"Parts removed as a result of a model upgrade become the property of IBM."
+
+
+"************************  ERROR AND WARNING MESSAGES  ***********************"
+
+"INFORMATIONAL:                                                             "
+"               **CONFIGURATION CONTAINS AIX AS PRIMARY OPERATING SYSTEM**  "
+"               Internal Load Source                                        "
+
+"Output File Name: DB1_E1050_250402 (1).csv"
+"","","","HMC 1"
+
+"Date : 04/02/2025","","","","","ECMPWR Version : 31"
+"Time : 13:36:33","","","","","Last Build : April 1, 2025"
+"CFREPORT :  DB1_E1050_250402 (1).cfr"
+"Currency : KWON"
+"Hardware Price File : KR KWON Thousands won Commercial--POWER 04/02/2025"
+"Software Price File : KR KWON Thousands won Commercial--POWER 04//02/2025"
+
+"This configurator is classified for proposal usage for IBM personnel"
+"and Business Partners only.  The configurator USER must provide"
+"complete and accurate information in order to produce a valid"
+"upgrade system order or proposal.  The user will be held responsible"
+"for verifying that the price, terms, and conditions are consistent"
+"with the current sales manual.  Commitments on prices should not be"
+"made without complete verification with the sales manuals. Prices"
+"are for your information only and are subject to change. Applicable"
+"taxes are not shown."
+
+
+"*******************************  HARDWARE  *******************************"
+
+"Product","Description","Qty","Purchase","","","","Maint","","","",""
+
+"7063-CR2","HMC 1:Hardware Management Console","1","9069.2","","","","MULT","","","",""
+"0964","Hardware Management Console License for CR2","1","0","","","","","","","",""
+"4651","Rack Indicator, Rack #1","1","0","","","","","","","",""
+"6577","Power Cable - Drawer to IBM PDU, 200-240V/10A","2","127.8","","","","","","","",""
+"9069","HMC/Server  Order Linkage Indicator","1","0","","","","","","","",""
+"9716","Language Group Specify - Korean","1","0","","","","","","","",""
+"AKNC","Premium S&H Indicator","1","0","","","","","","","",""
+"EB2L","AC Power Supply - 900W","2","2267.4","","","","","","","",""
+"EB2T","RAID1 Enabled","1","0","","","","","","","",""
+"EBZ1","Front of Panel with 2x USB ports","1","589.6","","","","","","","",""
+"EHMD","1.8 TB 10K RPM 4K SAS HDD SFF","2","5433","","","","","","","",""
+"EM62","16 GB DDR4 Memory","4","18646.8","","","","","","","",""
+"EP75","6-core 3.0 GHz POWER9 Processor","1","9065","","","","","","","",""
+"ERK0","Fixed Length Rail Kit for 7063-CR2","1","902.7","","","","","","","",""
+"","","","=========","","","","=========","","","",""
+"","7063-CR2 Price","","46101.5","","","","","","",""
+"","One-time Maintenance","","","","","","344","","","",""
+"","Monthly Maintenance","","","","","","101","","","",""
+
+"","Non-discountable Shipping and Handling Charge","","566.74"
+
+"7316-TF5","Rack-Mounted Flat Panel Console Kit 1:IBM 1U Rackmount Console Kit","1","13603.8","","","","MULT","","","",""
+"4651","Rack Indicator, Rack #1","1","0","","","","","","","",""
+"9716","Language Group Specify - Korean","1","N/C","","","","","","","",""
+"9911","Power Cord (4M) Specify -- All (Standard rack power cord)","1","0","","","","","","","",""
+"AKNC","Premium S&H Indicator","1","0","","","","","","","",""
+"EK9H","Specify code Korea Keyboard Language","1","0","","","","","","","",""
+"","","","=========","","","","=========","","","",""
+"","7316-TF5 Price","","13603.8","","","","","","",""
+"","One-time Maintenance","","","","","","146","","","",""
+"","Monthly Maintenance","","","","","","51.5","","","",""
+
+"","Non-discountable Shipping and Handling Charge","","69.91"
+
+"*******************************  SOFTWARE  *******************************"
+
+"Product","Description","Qty","License","","","","","","","",""
+
+"5773-RS3","MCRSA for HMC - 3-Year","1","N/C","","","","","","","",""
+"0569","Per Processor Software Support 3 Year","1","1738.8","","","","","","","",""
+"7000","Agreement for MCRSA","1","N/C","","","","","","","",""
+"","","","=========","","","",""
+"","5773-RS3 Price","","1738.8","","","","","","",""
+
+
+"*****************************  GRAND TOTALS  *****************************"
+
+"","Hardware Price","","59705.3"
+"","One-time Maintenance","","490"
+"","Software OTC","","1738.8"
+"","","","========="
+"","System Total","","61934.1"
+"","Non-discountable Shipping and Handling Charge","","636.65"
+"","Monthly Maintenance","","","","","","152.5"
+
+"N/O  - Not Offered"
+"N/A  - Price Not Available in Price Database"
+"N/C  - No Charge"
+"A    - Annual Maintenance Price"
+"W/D  - WITHDRAWN"
+"F    - ESA 24x7 Full Coverage"
+"P    - ESA 9x5 Prime Coverage"
+
+"Parts removed as a result of a model upgrade become the property of IBM."
+
+
+"************************  ERROR AND WARNING MESSAGES  ***********************"
+
+"INFORMATIONAL:                                                             "
+"               **CONFIGURATION CONTAINS AIX AS PRIMARY OPERATING SYSTEM**  "
+
+"*****************************  SYSTEM SUMMARY  *****************************"
+
+"Server 1"
+"","Hardware Price","","2410048.6"
+"","One-time Maintenance","","536"
+"","Software OTC","","126032.4"
+"","","","========="
+"","System Total","","2536617"
+"","Monthly Maintenance","","","","","","63"
+"","Annual Maintenance","","","","","","1316.7"
+
+"HMC 1"
+"","Hardware Price","","59705.3"
+"","One-time Maintenance","","490"
+"","Software OTC","","1738.8"
+"","","","========="
+"","System Total","","61934.1"
+"","Monthly Maintenance","","","","","","152.5"
+
+
+
+"*****************************  OVERALL ORDER  *****************************"
+
+"","Hardware Price","","2469753.9"
+"","One-time Maintenance","","1026"
+"","Software OTC","","127771.2"
+"","","","========="
+"","System Total","","2598551.1"
+"","Total Non-discountable Shipping and Handling Charge","","7521.65"
+"","Monthly Maintenance","","","","","","215.5"
+"","Annual Maintenance","","","","","","1316.7"
+

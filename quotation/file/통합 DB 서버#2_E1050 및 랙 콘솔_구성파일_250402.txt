@@ -1,0 +1,388 @@
+04/01/2025                                  DB1_E1050_250402 (1) 
+13:36:33
+Configuration Summary
+
+Hardware Section Totals
+        Initial orders
+                 Purchase                          2,469,753.9  
+                 Monthly Maint                           215.5  
+                 Annual Maint                          1,316.7  
+                 OTC                                     1,026  
+____________________________________________________
+
+Overall Hardware Order (Net Charges)
+                 Purchase                     KWON 2,469,753.9  
+                 Monthly Maint                      KWON 215.5  
+                 Annual Maint                     KWON 1,316.7  
+                 OTC                                KWON 1,026  
+
+
+Software Section Totals
+        Initial orders
+                 OTC                                 127,771.2  
+____________________________________________________
+
+Overall Software Order (Net Charges)
+                 OTC                            KWON 127,771.2  
+
+
+____________________________________________________
+
+Overall System Order (Net Grand Totals)
+
+                 OTC                               2,598,551.1
+                 Monthly                                 215.5
+                 Annual                                1,316.7
+
+
+                                                                                                                          
+______________________________________________________________________
+
+Total Non-discountable Shipping and Handling Charge: KWON 7,521.65
+______________________________________________________________________
+
+
+
+Notes:
+1) All list prices are effective as of
+   04/02/2025, and are subject to change without notice.
+   Prices do not include any applicable recycling fees.
+2) Maintenance prices shown are reference prices
+   (ESA - US Only) and are standard level of service.
+3) All removed parts belong to IBM on any
+   upgrade or Return Parts transaction.
+4) Informational totals are calculated based
+   upon current list and/or reference price and do not reflect
+   the prices actually paid by the customer.
+   Base starting-point prices show only the
+   recurring charges.
+5) Shipping & Handling Charges shown in the configuration
+   and system summary section(s) of this output are calculated
+   based on the specific machine(s) configuration, 
+   are not eligible for discount, and will automatically be
+   added to any quote, order, and invoice.
+
+Configuration Comments:
+ CEID: 10ailnjz
+Created on We Apr 02 2025 13:36:33 GMT+0900 (UTC) by Sang In
+Park
+*** This is a POWER SYSTEMS MACHINE - Please see System
+comments for the Operating System(s) ordered ***
+Customer Requested Arrival Date: 2025/04/16
+04/01/2025                                  DB1_E1050_250402 (1) 
+04:36:34
+System 1 - Summary - ( Server 1 )
+
+Hardware Section Totals
+        Initial orders
+                 Purchase                          2,410,048.6  
+                 Monthly Maint                              63  
+                 Annual Maint                          1,316.7  
+                 OTC                                       536  
+____________________________________________________
+
+Overall Hardware Order (Net Charges)
+                 Purchase                     KWON 2,410,048.6  
+                 Monthly Maint                         KWON 63  
+                 Annual Maint                     KWON 1,316.7  
+                 OTC                                  KWON 536  
+
+
+Software Section Totals
+        Initial orders
+                 OTC                                 126,032.4  
+____________________________________________________
+
+Overall Software Order (Net Charges)
+                 OTC                            KWON 126,032.4  
+
+
+____________________________________________________
+
+Overall System Order (Net Grand Totals)
+
+                 OTC                                 2,536,617
+                 Monthly                                    63
+                 Annual                                1,316.7
+
+
+
+______________________________________________________________________
+
+Non-discountable Shipping and Handling Charge:           6,885
+______________________________________________________________________
+
+
+System 1 - Comments - ( Server 1 ) 
+
+00j.                **CONFIGURATION CONTAINS AIX AS PRIMARY OPERATING SYSTEM**
+                    Internal Load Source
+
+                                                                                                                          
+04/01/2025                                  DB1_E1050_250402 (1) 
+13:36:33
+System 1 - Initial Hardware - ( Server 1 )
+                                                                                                                          
+                                                                                              Extended           
+Product                      Description                       Qty     Extended Purchase       Maint       Term  
+________  ___________________________________________________  _____  ____________________  _____________  _____________  
+                                                                                                                          
+9043-MRX  Server 1:9043 Model MRX                                  1             265,131.6                                                     
+    0265  AIX Partition Specify                                    2                     0                                                     
+    2146  Primary OS - AIX                                         1                     0                                                     
+    4558  Power Cord To PDU/UPS, (100-240V/16A)                    4                 375.6                                                     
+    4649  Rack Integration Services                                1               1,005.3                                                     
+    4651  Rack Indicator, Rack #1                                  1                     0                                                     
+    5000  Software Preload Required                                1                     0                                                     
+    6577  Power Cable - Drawer to IBM PDU, 200-240V/10A            2                 187.8                                                     
+    9440  New AIX License Core Counter                            26                     0                                                     
+    9716  Language Group Specify - Korean                          1                     0                                                     
+    AKNC  Premium S&H Indicator                                    1             See notes                                                     
+    EB39  Power Supply - 2300W for Server (200-240 VAC)            4              32,169.2                                                     
+    EB46  10GbE Optical Transceiver SFP+ SR                       12               4,425.6                                                     
+    EC72  PCIe4 2-Port 25/10/1 GbE RoCE SFP28 Adapter              6              78,711.6                                                     
+    EC7T  800GB Mainstream NVMe U.2 SSD 4k for AIX/Linux           8              69,647.2                                                     
+    ECLS  3.0M CXP x16 Copper Cable Pair for PCIe4 Expansion       2              12,063.4                                                     
+          Drawer                                                                                                                               
+    ECW0  Optical Wrap Plug                                        6                 403.2                                                     
+    EHSD  Power AIX Segment Indicator                              1                     0                                                     
+    EJ0Q  Storage NVMe Backplan                                    1                     0                                                     
+    EJ2A  PCIe4 x16 to CXP Converter Adapter (support AOC)         2              23,456.8                                                     
+    EMCD  512 of #EMCA 1GB Memory Activations for MRX              1                83,825                                                     
+    EMFH  64GB (2 x 32GB) DDR5 Memory DDIMM                       12             482,420.4                                                     
+    EN1L  PCIe4 32Gb 4-port Optical Fibre Channel Adapter          6               317,628                                                     
+    ENZ0  PCIe Gen4 I/O Expansion Drawer                           1              39,371.9                                                     
+    ENZF  PCIe4 6-Slot Fanout Module for PCIe Gen4 I/O             2              75,462.2                                                     
+          Expansion Drawer                                                                                                                     
+    EPEU  12-core Typical 3.35 to 4.0 GHZ (max) processor          4             543,653.6                                                     
+    EPLU  Front Heatsink + TIM PAD (For MRX)                       2                 6,702                                                     
+    EPLV  Rear Heatsink + TIM PAD (For MRX)                        2                 6,702                                                     
+    EPUR  1 core Processor Activation for #EPEU                   26             278,800.6                                                     
+    EPVW  PowerVM V4                                              26                     0                                                     
+    ES30  PCIe3 SAS Tape Adapter Quad-port 6Gb x8                  2              18,009.4                                                     
+    ESWK  AIX Update Access Key (UAK)                             39                     0                                                     
+    EUA5  Standalone USB DVD drive w/cable                         1                 663.7                                                     
+                                                                      ____________________  _____________      _____________  
+          Serial: N/A                                          Total      KWON 2,340,816.1           *        *   
+                                      
+                                                                                                                          
+          Non-discountable Shipping and Handling Charge:                  KWON    2,215.61
+                                                                                                                          
+7226-1U3  Multi-media Storage Enclosure                            1               4,589.5            309  OTC (1)                                      
+    8002  Ultrium Cleaning Cartridge                               1                 240.6                                                     
+    8541  HHLTO8 SAS Tape Drive                                    2                32,155                                                     
+    8806  Ultrium 8 Data Cartridge (5-Pack)                        2                 3,275                                                     
+    9600  Attached to AIX System                                   1                   N/C                                                     
+    9848  Rack Device to PDU Cord                                  1                  53.7                                                     
+    9849  5.5m Mini-SAS/Mini-SAS 1x Cable                          2                   N/C                                                     
+    AKNC  Premium S&H Indicator                                    1             See notes                                                     
+                                                                      ____________________  _____________      _____________  
+          Serial: N/A                                          Total         KWON 40,313.8           *        *   
+                                                                                                KWON 309    OTC
+                                                                                            KWON 1,316.7    Ann                                      
+                                                                                                                          
+          Non-discountable Shipping and Handling Charge:                     KWON   149.75
+                                                                                                                          
+7965-S42  Rack 1:7965-S42 2.0M POWER RACK                          1               9,457.9            227  OTC (1)                                      
+    0274  Rack Content Specify 7214-1U2, 7216-1U2 or 7226-1U3      1                   N/C                                                     
+          -1 EIA unit                                                                                                                          
+    4651  Rack Indicator, Rack #1                                  3                   N/C                                                     
+    6656  4.3m (14-Ft) 1PH/32A Power Cord                          4               1,879.2                                                     
+    7188  Power Distribution Unit                                  2               5,182.4                                                     
+    AKNC  Premium S&H Indicator                                    1             See notes                                                     
+    ECJJ  High Function 9xC19 Single-Phase or Three-Phase Wye      2               7,255.4                                                     
+          PDU plus                                                                                                                             
+    ECRG  Rear Door IBM/OEM Flat for S42 Rack                      1               1,425.2                                                     
+    ECRJ  Rack Side Cover                                          2               2,228.6                                                     
+    ECRK  Rack Rear Extension 5-In                                 1                 1,490                                                     
+    ER0K  Rack Content Specify: 7316-TF5 -1 EIA                    1                   N/C                                                     
+    ER14  Rack Content Specify 1U Horizontal PDU - 1 EIA           4                   N/C                                                     
+    ER2B  Reserve 2U at Bottom of Rack                             1                   N/C                                                     
+    ER3E  RACK CONTENT SPECIFY: 9043-MRX 4EIA                      1                     0                                                     
+    ERCN  Rack Content Specify: 7063-CR2 - 1EIA                    1                   N/C                                                     
+    ERCU  Rack Content Specify FC ENZ0 - 4EIA                      1                   N/C                                                     
+    ERLR  Left/Right PDU Redundancy                                1                     0                                                     
+                                                                      ____________________  _____________      _____________  
+          Serial: N/A                                          Total         KWON 28,918.7           *        *   
+                                                                                                KWON 227    OTC
+                                                                                                 KWON 63    Mth                                      
+                                                                                                                          
+          Non-discountable Shipping and Handling Charge:                     KWON 4,519.64
+                                                                                                                          
+5313-HPO  IBM Power Software HIPO                                  1                   N/C                                                     
+    0654  9043-MRX Routing Code                                    1                   N/C                                                     
+    0967  Base OS                                                  1                   N/C                                                     
+    1073  OS Specify code for AIX 7.3                              1                   N/C                                                     
+    5000  Preload                                                  1                   N/C                                                     
+    5986  Korean Preinstall PII Language                           1                   N/C                                                     
+    9210  HW is Rack integrated                                    1                   N/C                                                     
+                                                                      ____________________  _____________      _____________  
+          Serial: N/A                                          Total                KWON 0           *        *   
+                                      
+                                                                                                                          
+          Non-discountable Shipping and Handling Charge:                            KWON 0
+                                                                                                                          
+04/01/2025                                  DB1_E1050_250402 (1) 
+13:36:33
+System 1 - Initial Software - ( Server 1 )
+                                                                                                                          
+                                                                                           Lic   
+Product                   Description                   Qty       Extended Price     Term  Type  
+________  ____________________________________________  _____  ____________________  ____  ____  
+                                                                                                 
+5692-A6P  System Software                                   1                   N/C              
+    1101  DVD Process No Charge                             1                   N/C              
+    2282  IBM PowerVM V4 VIOS                               1                   N/C              
+    2284  IBM PowerVM V4 Expansion Pack                     1                   N/C              
+    2324  NovaLink (5765-PVS/PVE/VE3/VE4)                   1                   N/C              
+    2375  AIX 7.3 Base Install                              1                   N/C              
+    2376  AIX 7.3 Expansion Pack                            1                   N/C              
+    2377  AIX 7.3 Standard Edition Specify (5765-G98)       1                   N/C              
+    3435  DVD/CD-ROM                                        1                   N/C              
+    3450  Electronic Delivery                               1                   N/C              
+                                                               ____________________  
+          Serial: N/A                                   Total                KWON 0              
+                                                                                                 
+5765-G98  IBM AIX 7 Standard Edition                        1                   N/C              
+    2377  AIX 7.3 Standard Edition Specify                  1                   N/C              
+    3500  Preload Specifier                                 1                   N/C              
+    C1AT  Per Processor Power - Small                      26                53,989              
+                                                               ____________________  
+          Serial: N/A                                   Total           KWON 53,989              
+                                                                                                 
+5773-SM3  3-Year SWMA for 5765-C34/E61/E62/G03/G62/G98      1                   N/C              
+    1252  Per Processor 3 Yr SWMA Small Power Reg          26              40,492.4              
+                                                               ____________________  
+          Serial: N/A                                   Total         KWON 40,492.4              
+                                                                                                 
+5765-VE4  IBM PowerVM V4                                    1                   N/C              
+    C3TG  Per Proc Core Small N/C HSE                      26                   N/C              
+                                                               ____________________  
+          Serial: N/A                                   Total                KWON 0              
+                                                                                                 
+5773-PVE  3-Year SWMA for PowerVM                           1                   N/C              
+    A0NH  Per Proc SW Maint Registration (Small)           26                31,551              
+                                                               ____________________  
+          Serial: N/A                                   Total           KWON 31,551              
+                                                                                                 
+04/01/2025                                  DB1_E1050_250402 (1) 
+04:36:34
+System 2 - Summary - ( HMC 1 )
+
+Hardware Section Totals
+        Initial orders
+                 Purchase                             59,705.3  
+                 Monthly Maint                           152.5  
+                 OTC                                       490  
+____________________________________________________
+
+Overall Hardware Order (Net Charges)
+                 Purchase                        KWON 59,705.3  
+                 Monthly Maint                      KWON 152.5  
+                 OTC                                  KWON 490  
+
+
+Software Section Totals
+        Initial orders
+                 OTC                                   1,738.8  
+____________________________________________________
+
+Overall Software Order (Net Charges)
+                 OTC                              KWON 1,738.8  
+
+
+____________________________________________________
+
+Overall System Order (Net Grand Totals)
+
+                 OTC                                  61,934.1
+                 Monthly                                 152.5
+
+
+
+______________________________________________________________________
+
+Non-discountable Shipping and Handling Charge:          636.65
+______________________________________________________________________
+
+
+System 2 - Comments - ( HMC 1 ) 
+
+026.                **CONFIGURATION CONTAINS AIX AS PRIMARY OPERATING SYSTEM**
+
+                                                                                                                          
+04/01/2025                                  DB1_E1050_250402 (1) 
+13:36:33
+System 2 - Initial Hardware - ( HMC 1 )
+                                                                                                                          
+                                                                                              Extended           
+Product                      Description                       Qty     Extended Purchase       Maint       Term  
+________  ___________________________________________________  _____  ____________________  _____________  _____________  
+                                                                                                                          
+7063-CR2  HMC 1:Hardware Management Console                        1               9,069.2            344  OTC (1)                                      
+    0964  Hardware Management Console License for CR2              1                     0                                                     
+    4651  Rack Indicator, Rack #1                                  1                     0                                                     
+    6577  Power Cable - Drawer to IBM PDU, 200-240V/10A            2                 127.8                                                     
+    9069  HMC/Server  Order Linkage Indicator                      1                     0                                                     
+    9716  Language Group Specify - Korean                          1                     0                                                     
+    AKNC  Premium S&H Indicator                                    1             See notes                                                     
+    EB2L  AC Power Supply - 900W                                   2               2,267.4                                                     
+    EB2T  RAID1 Enabled                                            1                     0                                                     
+    EBZ1  Front of Panel with 2x USB ports                         1                 589.6                                                     
+    EHMD  1.8 TB 10K RPM 4K SAS HDD SFF                            2                 5,433                                                     
+    EM62  16 GB DDR4 Memory                                        4              18,646.8                                                     
+    EP75  6-core 3.0 GHz POWER9 Processor                          1                 9,065                                                     
+    ERK0  Fixed Length Rail Kit for 7063-CR2                       1                 902.7                                                     
+                                                                      ____________________  _____________      _____________  
+          Serial: N/A                                          Total         KWON 46,101.5           *        *   
+                                                                                                KWON 344    OTC
+                                                                                                KWON 101    Mth                                      
+                                                                                                                          
+          Non-discountable Shipping and Handling Charge:                     KWON   566.74
+                                                                                                                          
+7316-TF5  Rack-Mounted Flat Panel Console Kit 1:IBM 1U             1              13,603.8            146  OTC (1)                                      
+          Rackmount Console Kit                                                                                                                      
+    4651  Rack Indicator, Rack #1                                  1                     0                                                     
+    9716  Language Group Specify - Korean                          1                   N/C                                                     
+    9911  Power Cord (4M) Specify -- All (Standard rack power      1                     0                                                     
+          cord)                                                                                                                                
+    AKNC  Premium S&H Indicator                                    1             See notes                                                     
+    EK9H  Specify code Korea Keyboard Language                     1                     0                                                     
+                                                                      ____________________  _____________      _____________  
+          Serial: N/A                                          Total         KWON 13,603.8           *        *   
+                                                                                                KWON 146    OTC
+                                                                                               KWON 51.5    Mth                                      
+                                                                                                                          
+          Non-discountable Shipping and Handling Charge:                     KWON    69.91
+                                                                                                                          
+04/01/2025                                  DB1_E1050_250402 (1) 
+13:36:33
+System 2 - Initial Software - ( HMC 1 )
+                                                                                                                          
+                                                                                           Lic   
+Product                   Description                   Qty       Extended Price     Term  Type  
+________  ____________________________________________  _____  ____________________  ____  ____  
+                                                                                                 
+5773-RS3  MCRSA for HMC - 3-Year                            1                   N/C              
+    0569  Per Processor Software Support 3 Year             1               1,738.8              
+    7000  Agreement for MCRSA                               1                   N/C              
+                                                               ____________________  
+          Serial: N/A                                   Total          KWON 1,738.8              
+                                                                                                 
+
+System 1 
+System 2 
+
+
+KR KWON Thousands won Commercial - Pricing retrieved on April 2, 2025 4:36 AM for pricing country/region code KR
+
+Based on version 31 CFREPORT file DB1_E1050_250402 (1),
+created April 1, 2025 by ECMPWR at system level 90501a250790,
+with 'DB1_E1050_250402 (1)' as the description.
+
+This configuration was created for ISO country code KR
+Output was formatted using the 'ko_KR' Locale.
+Total with missing prices is 'Off'
+
+References
+1.- ESA War Serv Upg 24x7

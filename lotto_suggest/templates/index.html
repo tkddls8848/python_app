@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 생성기</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 로또 번호 생성기</h1>
+            <p>최근 10회차 회피 기능이 있는 스마트 로또 번호 생성기</p>
+        </header>
+
+        <main>
+            <section class="generator-section">
+                <h2>번호 생성</h2>
+                <div class="method-buttons">
+                    <button class="method-btn" data-method="basic">기본 랜덤</button>
+                    <button class="method-btn" data-method="weighted">가중치 적용</button>
+                    <button class="method-btn" data-method="anti_frequency">반빈도 알고리즘</button>
+                    <button class="method-btn" data-method="time_decay">시간 감쇠 가중치</button>
+                </div>
+                
+                <div class="result-section">
+                    <div id="single-result" class="result-box hidden">
+                        <h3>생성된 번호</h3>
+                        <div id="numbers-display" class="numbers-display"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="multiple-section">
+                <h2>연속 생성</h2>
+                <div class="multiple-controls">
+                    <select id="multiple-method">
+                        <option value="basic">기본 랜덤</option>
+                        <option value="weighted">가중치 적용</option>
+                        <option value="anti_frequency">반빈도 알고리즘</option>
+                        <option value="time_decay">시간 감쇠 가중치</option>
+                    </select>
+                    <input type="number" id="count-input" min="1" max="20" value="5" placeholder="생성 개수">
+                    <button id="generate-multiple-btn">연속 생성</button>
+                </div>
+                
+                <div id="multiple-results" class="multiple-results hidden"></div>
+            </section>
+
+            <section class="analysis-section">
+                <h2>최근 10회차 분석</h2>
+                <button id="show-analysis-btn">분석 보기</button>
+                
+                <div id="analysis-content" class="analysis-content hidden">
+                    <div class="recent-numbers">
+                        <h3>최근 10회차 당첨번호</h3>
+                        <div id="recent-numbers-display"></div>
+                    </div>
+                    
+                    <div class="frequency-analysis">
+                        <h3>번호별 출현 빈도</h3>
+                        <div id="frequency-display"></div>
+                    </div>
+                    
+                    <div class="not-appeared">
+                        <h3>최근 미출현 번호</h3>
+                        <div id="not-appeared-display"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html> 
