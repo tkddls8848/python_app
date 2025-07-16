@@ -7,11 +7,12 @@ from datetime import datetime
 from tqdm import tqdm
 import time
 import sys
+import threading
 
 class FileDataMetadataScanner:
     """공공데이터포털 파일데이터 메타데이터 스캐너"""
     
-    def __init__(self, start_num, end_num, max_workers=50, scan_type='fileData', 
+    def __init__(self, start_num, end_num, max_workers=50, scan_type='openapi', 
                  max_retries=3, retry_delay=1, timeout=5):
         self.start_num = start_num
         self.end_num = end_num
@@ -28,11 +29,128 @@ class FileDataMetadataScanner:
             'failed': 0,
             'retried': 0,  # 재시도된 요청 수
             'retry_success': 0,  # 재시도로 성공한 요청 수
+            'waiting_room_detected': 0,  # 대기실 감지 횟수
             'file_numbers': [],
             'file_types': {},  # 파일 타입별 통계
             'details': {}
         }
         
+        # 대기실 제어용 변수
+        self.waiting_room_active = False
+        self.waiting_room_lock = threading.Lock()
+        self.paused_futures = []
+    
+    def is_waiting_room_response(self, response):
+        """대기실 응답인지 확인 - 개선된 감지 로직"""
+        try:
+            # 1. URL 리다이렉션 확인 (최우선 - 확실한 대기실 감지)
+            if 'waitingroom' in response.url.lower():
+                print(f"🚨 대기실 감지 (URL): {response.url}")
+                return True
+            
+            # 2. JSON 파싱 시도 (정상 응답인지 먼저 확인)
+            try:
+                data = response.json()
+                # 정상적인 JSON 응답인 경우
+                if isinstance(data, dict):
+                    # 정상적인 "데이터 없음" 응답인 경우
+                    if data.get('description') == '해당 데이터는 존재하지 않습니다.':
+                        return False
+                    # 정상적인 메타데이터가 있는 경우
+                    if data.get('title') or data.get('organization') or data.get('fileType'):
+                        return False
+                    # 빈 JSON이지만 구조가 올바른 경우
+                    if isinstance(data, dict) and len(data) == 0:
+                        return False
+                # 리스트 형태의 JSON인 경우
+                elif isinstance(data, list):
+                    return False
+                
+                return False  # 기타 정상적인 JSON 응답
+                
+            except (json.JSONDecodeError, ValueError):
+                # JSON 파싱 실패 - HTML 응답일 가능성 높음
+                pass
+            
+            # 3. Content-Type이 HTML이고 응답 내용에서 대기실 키워드 확인
+            content_type = response.headers.get('Content-Type', '').lower()
+            if 'text/html' in content_type:
+                try:
+                    response_text = response.text.lower()
+                    # 더 구체적인 대기실 키워드 조합 확인
+                    waiting_room_patterns = [
+                        ('waitingroom', 'main.html'),  # 실제 대기실 URL 패턴
+                        ('대기실', '접속'),
+                        ('대기실', '트래픽'),
+                        ('접속 대기', ''),
+                        ('잠시 대기', ''),
+                        ('트래픽 과부하', ''),
+                        ('서비스 대기', ''),
+                        ('please wait', 'traffic'),
+                        ('waiting room', ''),
+                        ('대기 중', '과부하'),
+                        ('서비스 점검', '대기')
+                    ]
+                    
+                    for primary, secondary in waiting_room_patterns:
+                        if primary in response_text:
+                            if not secondary or secondary in response_text:
+                                print(f"🚨 대기실 감지 (패턴 '{primary}'+'{secondary}'): {response.url}")
+                                return True
+                except:
+                    pass
+                
+                # HTML 응답이지만 대기실 키워드가 없는 경우 - 알림 및 내용 출력
+                print(f"⚠️  HTML 응답 수신 - URL: {response.url}")
+                print(f"📄 HTML 내용 (처음 500자):")
+                print(response.text[:500])
+                print("=" * 50)
+                return False
+            
+            # 4. 기타 예외 상황 (Content-Type이 예상과 다른 경우)
+            return False
+                
+        except Exception:
+            # 예외 발생 시 안전하게 대기실로 간주하지 않음
+            return False
+        
+        return False
+    
+    def wait_for_site_recovery(self, test_num):
+        """사이트 복구를 기다림"""
+        print(f"\n🚨 대기실 감지! 사이트 복구 대기 중...")
+        print(f"   📍 테스트 번호: {test_num}")
+        
+        recovery_check_interval = 30  # 30초마다 확인
+        max_wait_time = 1800  # 최대 30분 대기
+        elapsed_time = 0
+        
+        while elapsed_time < max_wait_time:
+            try:
+                test_url = self.base_url.format(test_num)
+                response = requests.get(test_url, timeout=self.timeout)
+                
+                if response.status_code == 200 and not self.is_waiting_room_response(response):
+                    # JSON 파싱 가능한지 확인
+                    try:
+                        response.json()
+                        print(f"✅ 사이트 복구 완료! ({elapsed_time}초 경과)")
+                        return True
+                    except (json.JSONDecodeError, ValueError):
+                        pass
+                
+                print(f"⏳ 대기 중... ({elapsed_time}초 경과)")
+                time.sleep(recovery_check_interval)
+                elapsed_time += recovery_check_interval
+                
+            except Exception as e:
+                print(f"⚠️ 복구 확인 중 오류: {str(e)}")
+                time.sleep(recovery_check_interval)
+                elapsed_time += recovery_check_interval
+        
+        print(f"❌ 최대 대기 시간 초과 ({max_wait_time}초)")
+        return False
+    
     def check_metadata(self, num, retry_count=0):
         """단일 파일데이터 메타데이터 조회 (재시도 로직 포함)"""
         url = self.base_url.format(num)
@@ -41,6 +159,31 @@ class FileDataMetadataScanner:
             response = requests.get(url, timeout=self.timeout)
             
             if response.status_code == 200:
+                # 대기실 응답인지 확인
+                if self.is_waiting_room_response(response):
+                    with self.waiting_room_lock:
+                        if not self.waiting_room_active:
+                            self.waiting_room_active = True
+                            self.results['waiting_room_detected'] += 1
+                            
+                            # 사이트 복구 대기
+                            if self.wait_for_site_recovery(self.end_num):
+                                self.waiting_room_active = False
+                                # 복구 후 재시도
+                                return self.check_metadata(num, retry_count)
+                            else:
+                                return {
+                                    'number': num,
+                                    'has_data': False,
+                                    'status': 'waiting_room_timeout',
+                                    'error': '대기실 복구 대기 시간 초과',
+                                    'retry_count': retry_count
+                                }
+                        else:
+                            # 다른 스레드가 이미 대기실 처리 중
+                            time.sleep(30)  # 30초 대기 후 재시도
+                            return self.check_metadata(num, retry_count)
+                
                 data = response.json()
                 
                 # 데이터셋 존재 여부 확인
@@ -125,11 +268,18 @@ class FileDataMetadataScanner:
                 'retry_count': retry_count
             }
         except json.JSONDecodeError:
+            # JSON 파싱 실패 시 HTML 응답 내용 출력
+            print(f"⚠️  JSON 파싱 실패 - 번호: {num}")
+            print(f"📄 응답 내용 (처음 500자):")
+            print(response.text[:500])
+            print("=" * 50)
+            
             return {
                 'number': num,
                 'has_data': False,
                 'status': 'error',
                 'error': '잘못된 JSON 형식',
+                'response_content': response.text[:500],
                 'retry_count': retry_count
             }
         except Exception as e:
@@ -250,15 +400,8 @@ class FileDataMetadataScanner:
         type_dir = os.path.join(output_dir, self.scan_type)
         os.makedirs(type_dir, exist_ok=True)
         
-        # 타임스탬프 생성
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        
-        # [타임스탬프] 폴더 생성
-        timestamp_dir = os.path.join(type_dir, timestamp)
-        os.makedirs(timestamp_dir, exist_ok=True)
-        
         # 1. 전체 결과 저장 (요약 포함)
-        summary_file = os.path.join(timestamp_dir, "summary.json")
+        summary_file = os.path.join(type_dir, "summary.json")
         with open(summary_file, 'w', encoding='utf-8') as f:
             json.dump({
                 'scan_range': f"{self.start_num}-{self.end_num}",
@@ -269,6 +412,7 @@ class FileDataMetadataScanner:
                 'retried': self.results['retried'],
                 'retry_success': self.results['retry_success'],
                 'retry_success_rate': f"{(self.results['retry_success'] / self.results['retried'] * 100):.2f}%" if self.results['retried'] > 0 else "0.00%",
+                'waiting_room_detected': self.results['waiting_room_detected'],
                 'success_rate': f"{(self.results['with_data'] / self.results['total'] * 100):.2f}%",
                 'file_types': self.results['file_types'],
                 'scan_time': self.results.get('scan_time', {}),
@@ -276,25 +420,24 @@ class FileDataMetadataScanner:
             }, f, ensure_ascii=False, indent=2)
         
         # 2. 파일데이터가 있는 번호만 별도 저장
-        file_numbers_file = os.path.join(timestamp_dir, "file_numbers.json")
+        file_numbers_file = os.path.join(type_dir, "file_numbers.json")
         with open(file_numbers_file, 'w', encoding='utf-8') as f:
             json.dump({
                 'file_numbers': self.results['file_numbers'],
                 'count': len(self.results['file_numbers']),
                 'scan_info': {
-                    'range': f"{self.start_num}-{self.end_num}",
-                    'timestamp': timestamp
+                    'range': f"{self.start_num}-{self.end_num}"
                 }
             }, f, ensure_ascii=False, indent=2)
         
         # 3. 파일 번호 목록을 텍스트 파일로도 저장
-        file_list_file = os.path.join(timestamp_dir, "file_numbers.txt")
+        file_list_file = os.path.join(type_dir, "file_numbers.txt")
         with open(file_list_file, 'w', encoding='utf-8') as f:
             for num in self.results['file_numbers']:
                 f.write(f"{num}\n")
         
         # 4. 상세 파일데이터 메타데이터 저장 (파일이 있는 것만)
-        file_metadata_file = os.path.join(timestamp_dir, "file_metadata.json")
+        file_metadata_file = os.path.join(type_dir, "file_metadata.json")
         file_metadata = {
             num: details for num, details in self.results['details'].items()
             if details.get('has_data', False)
@@ -311,7 +454,7 @@ class FileDataMetadataScanner:
                         type_numbers.append(num)
                 
                 if type_numbers:
-                    type_file = os.path.join(timestamp_dir, f"file_type_{file_type}.json")
+                    type_file = os.path.join(type_dir, f"file_type_{file_type}.json")
                     with open(type_file, 'w', encoding='utf-8') as f:
                         json.dump({
                             'file_type': file_type,
@@ -326,7 +469,7 @@ class FileDataMetadataScanner:
         ]
         failed_file = None
         if failed_numbers:
-            failed_file = os.path.join(timestamp_dir, "failed_numbers.json")
+            failed_file = os.path.join(type_dir, "failed_numbers.json")
             with open(failed_file, 'w', encoding='utf-8') as f:
                 json.dump({
                     'failed_numbers': failed_numbers,
@@ -359,6 +502,10 @@ class FileDataMetadataScanner:
             print(f"✅ 재시도 성공: {self.results['retry_success']:,}개")
             retry_success_rate = (self.results['retry_success'] / self.results['retried'] * 100) if self.results['retried'] > 0 else 0
             print(f"📈 재시도 성공률: {retry_success_rate:.1f}%")
+        
+        # 대기실 감지 통계 표시
+        if self.results['waiting_room_detected'] > 0:
+            print(f"🚨 대기실 감지: {self.results['waiting_room_detected']:,}회")
         
         if self.results.get('scan_time'):
             print(f"\n⏱️  소요 시간: {self.results['scan_time']['elapsed_formatted']}")
@@ -457,7 +604,7 @@ def main():
             # 메타데이터 스캔
             scanner.scan_range()
             
-            # 결과 저장 (results/[type명]/[타임스탬프]/ 형태로 저장)
+            # 결과 저장
             saved_files = scanner.save_results(args.output)
             
             # 요약 출력

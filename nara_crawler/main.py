@@ -12,6 +12,7 @@ from datetime import datetime
 import sys
 from tqdm import tqdm
 from parser import NaraParser, DataExporter
+from metadata import FileDataMetadataScanner
 import concurrent.futures
 import threading
 import queue
@@ -242,10 +243,46 @@ def crawl_url(url, output_dir, formats, driver_pool):
     finally:
         driver_pool.return_driver(driver)
 
+def generate_urls_from_numbers(numbers):
+    """숫자 리스트에서 URL 생성"""
+    base_url = "https://www.data.go.kr/data/{}/openapi.do"
+    return [base_url.format(num) for num in numbers]
+
 def generate_urls(start_num, end_num):
     """시작번호와 끝번호 사이의 모든 URL 생성"""
     base_url = "https://www.data.go.kr/data/{}/openapi.do"
     return [base_url.format(num) for num in range(start_num, end_num + 1)]
+
+def check_metadata_and_get_valid_numbers(start_num, end_num, scan_type='openapi'):
+    """메타데이터를 체크하여 유효한 번호들만 반환"""
+    print(f"\n🔍 메타데이터 스캔 시작: {start_num} ~ {end_num}")
+    
+    # 메타데이터 스캐너 생성
+    scanner = FileDataMetadataScanner(
+        start_num=start_num,
+        end_num=end_num,
+        max_workers=50,
+        scan_type=scan_type
+    )
+    
+    # 메타데이터 스캔 실행
+    results = scanner.scan_range()
+    
+    # 결과 저장
+    scanner.save_results()
+    
+    # 요약 출력
+    scanner.print_summary()
+    
+    # 파일 데이터가 있는 번호들 반환
+    valid_numbers = results['file_numbers']
+    
+    print(f"\n✅ 메타데이터 스캔 완료!")
+    print(f"   📋 전체 스캔: {results['total']}개")
+    print(f"   ✅ 유효한 번호: {len(valid_numbers)}개")
+    print(f"   📊 필터링 비율: {(len(valid_numbers) / results['total'] * 100):.1f}%")
+    
+    return valid_numbers
 
 def batch_crawl(urls, output_dir="data", formats=['json', 'xml', 'md', 'csv'], max_workers=40):
     """범위 내의 모든 API 문서 크롤링"""
@@ -359,6 +396,9 @@ def main():
     parser.add_argument('-w', '--workers', type=int, default=20, help='동시 작업자 수 (기본값: 20)')
     parser.add_argument('--no-headless', action='store_true', help='헤드리스 모드 비활성화')
     parser.add_argument('--timeout', type=int, default=5, help='페이지 로드 타임아웃 (초)')
+    parser.add_argument('--skip-metadata', action='store_true', help='메타데이터 스캔 건너뛰기 (모든 번호 크롤링)')
+    parser.add_argument('--scan-type', choices=['openapi', 'fileData', 'standard'], default='openapi',
+                      help='메타데이터 스캔 타입 (기본값: openapi)')
     
     args = parser.parse_args()
     
@@ -371,9 +411,26 @@ def main():
         print("⚠️ 동시 작업자 수는 10-40 사이로 설정해주세요.")
         args.workers = 20
     
+    # 메타데이터 스캔 여부에 따라 처리
+    if args.skip_metadata:
+        print("⚠️ 메타데이터 스캔을 건너뛰고 모든 번호를 크롤링합니다.")
+        urls = generate_urls(args.start, args.end)
+    else:
+        # 메타데이터 스캔을 통해 유효한 번호만 추출
+        valid_numbers = check_metadata_and_get_valid_numbers(
+            args.start, args.end, args.scan_type
+        )
+        
+        if not valid_numbers:
+            print("❌ 유효한 번호가 없습니다. 크롤링을 종료합니다.")
+            sys.exit(1)
+        
+        # 유효한 번호들로 URL 생성
+        urls = generate_urls_from_numbers(valid_numbers)
+    
     # 배치 크롤링 실행
     batch_crawl(
-        generate_urls(args.start, args.end),
+        urls,
         args.output_dir,
         args.formats,
         args.workers
