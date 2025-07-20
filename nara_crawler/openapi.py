@@ -12,7 +12,7 @@ from datetime import datetime
 import sys
 from tqdm import tqdm
 from parser import NaraParser, DataExporter
-from metadata import FileDataMetadataScanner
+from metadata_openapi import OpenAPIMetadataScanner
 import concurrent.futures
 import threading
 import queue
@@ -253,16 +253,15 @@ def generate_urls(start_num, end_num):
     base_url = "https://www.data.go.kr/data/{}/openapi.do"
     return [base_url.format(num) for num in range(start_num, end_num + 1)]
 
-def check_metadata_and_get_valid_numbers(start_num, end_num, scan_type='openapi'):
+def check_metadata_and_get_valid_numbers(start_num, end_num):
     """메타데이터를 체크하여 유효한 번호들만 반환"""
     print(f"\n🔍 메타데이터 스캔 시작: {start_num} ~ {end_num}")
     
     # 메타데이터 스캐너 생성
-    scanner = FileDataMetadataScanner(
+    scanner = OpenAPIMetadataScanner(
         start_num=start_num,
         end_num=end_num,
-        max_workers=50,
-        scan_type=scan_type
+        max_workers=50
     )
     
     # 메타데이터 스캔 실행
@@ -284,7 +283,7 @@ def check_metadata_and_get_valid_numbers(start_num, end_num, scan_type='openapi'
     
     return valid_numbers
 
-def batch_crawl(urls, output_dir="data", formats=['json', 'xml', 'md', 'csv'], max_workers=40):
+def batch_crawl(urls, output_dir="/data/download_openapi", formats=['json', 'xml', 'md', 'csv'], max_workers=40):
     """범위 내의 모든 API 문서 크롤링"""
     total_urls = len(urls)
     
@@ -390,14 +389,14 @@ def main():
     parser = argparse.ArgumentParser(description='나라장터 API 크롤러')
     parser.add_argument('-s', '--start', type=int, required=True, help='시작 문서 번호')
     parser.add_argument('-e', '--end', type=int, required=True, help='끝 문서 번호')
-    parser.add_argument('-o', '--output-dir', default='output', help='출력 디렉토리 (기본값: output)')
+    parser.add_argument('-o', '--output-dir', default='/data/download_openapi', help='출력 디렉토리 (기본값: /data/download_openapi)')
     parser.add_argument('--formats', nargs='+', default=['json', 'xml', 'md', 'csv'],
                       choices=['json', 'xml', 'md', 'csv'], help='저장할 파일 형식')
     parser.add_argument('-w', '--workers', type=int, default=20, help='동시 작업자 수 (기본값: 20)')
     parser.add_argument('--no-headless', action='store_true', help='헤드리스 모드 비활성화')
     parser.add_argument('--timeout', type=int, default=5, help='페이지 로드 타임아웃 (초)')
     parser.add_argument('--skip-metadata', action='store_true', help='메타데이터 스캔 건너뛰기 (모든 번호 크롤링)')
-    parser.add_argument('--scan-type', choices=['openapi', 'fileData', 'standard'], default='openapi',
+    parser.add_argument('--scan-type', choices=['openapi'], default='openapi',
                       help='메타데이터 스캔 타입 (기본값: openapi)')
     
     args = parser.parse_args()
@@ -418,7 +417,7 @@ def main():
     else:
         # 메타데이터 스캔을 통해 유효한 번호만 추출
         valid_numbers = check_metadata_and_get_valid_numbers(
-            args.start, args.end, args.scan_type
+            args.start, args.end
         )
         
         if not valid_numbers:
