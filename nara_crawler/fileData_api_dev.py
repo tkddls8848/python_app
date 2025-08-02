@@ -367,12 +367,11 @@ def check_metadata_and_get_valid_numbers(start_num, end_num, scan_type='fileData
     print(f"\n🔍 메타데이터 스캔 시작: {start_num} ~ {end_num}")
     
     # 메타데이터 스캐너 생성
-    from metadata import FileDataMetadataScanner
+    from metadata_fileData import FileDataMetadataScanner
     scanner = FileDataMetadataScanner(
         start_num=start_num,
         end_num=end_num,
-        max_workers=50,
-        scan_type=scan_type
+        max_workers=50
     )
     
     # 메타데이터 스캔 실행

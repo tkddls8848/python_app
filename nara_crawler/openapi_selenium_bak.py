@@ -118,8 +118,10 @@ def get_api_id(url):
     m = re.search(r'/data/(\d+)/openapi', url)
     return m.group(1) if m else f"api_{url.replace('https://', '').replace('/', '_')}"
 
-def crawl_url(url, output_dir, formats, driver_pool):
+def crawl_url(url, output_dir, formats, driver_pool, timing_results=None):
     """단일 URL 크롤링 - 개선된 순서"""
+    if timing_results is not None:
+        start_time = time.time()
     os.makedirs(output_dir, exist_ok=True)
     api_id = get_api_id(url)
     
@@ -139,7 +141,6 @@ def crawl_url(url, output_dir, formats, driver_pool):
         
         # 페이지 로딩 대기
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-        time.sleep(1)
         
         parser = NaraParser(driver)
         
@@ -171,6 +172,8 @@ def crawl_url(url, output_dir, formats, driver_pool):
             crawling_result['saved_files'] = saved_files
             crawling_result['errors'] = save_errors
             
+            if timing_results is not None:
+                timing_results[url] = time.time() - start_time
             return crawling_result['success']
         
         # Step 3: REST API인 경우 Swagger JSON 추출 시도
@@ -219,6 +222,8 @@ def crawl_url(url, output_dir, formats, driver_pool):
                     f.write(f"{url}\n")
                 
                 crawling_result['errors'].append("API 정보를 찾을 수 없어 failed_urls.txt에 기록")
+                if timing_results is not None:
+                    timing_results[url] = time.time() - start_time
                 return False
         
         crawling_result['data'] = result
@@ -232,13 +237,16 @@ def crawl_url(url, output_dir, formats, driver_pool):
         
         # 메모리 정리
         MemoryManager.cleanup()
-        
+        if timing_results is not None:
+            timing_results[url] = time.time() - start_time
         return crawling_result['success']
     
     except Exception as e:
         error_msg = f"크롤링 실패: {str(e)}"
         print(f"❌ {error_msg}")
         crawling_result['errors'].append(error_msg)
+        if timing_results is not None:
+            timing_results[url] = time.time() - start_time
         return False
     finally:
         driver_pool.return_driver(driver)
@@ -309,15 +317,17 @@ def batch_crawl(urls, output_dir="/data/download_openapi", formats=['json', 'xml
         'start_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
     
+    timing_results = {}
+    
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
             future_to_url = {
-                executor.submit(crawl_url, url, output_dir, formats, driver_pool): url 
+                executor.submit(crawl_url, url, output_dir, formats, driver_pool, timing_results): url 
                 for url in urls
             }
             
-            with tqdm(total=total_urls, desc="크롤링 진행") as pbar:
-                for future in concurrent.futures.as_completed(future_to_url):
+            with tqdm(concurrent.futures.as_completed(future_to_url), total=total_urls, desc="크롤링 진행") as pbar:
+                for future in pbar:
                     url = future_to_url[future]
                     
                     if MemoryManager.check_memory_threshold():
@@ -335,8 +345,11 @@ def batch_crawl(urls, output_dir="/data/download_openapi", formats=['json', 'xml
                         results['failed_urls'].append(url)
                         print(f"\n⚠️ 예외 발생: {url} - {str(e)}")
                     
-                    pbar.update(1)
+                    pbar.update(0)
                     
+                    if timing_results:
+                        avg_time = sum(timing_results.values()) / len(timing_results)
+                        pbar.set_postfix({'평균소요(s)': f'{avg_time:.1f}'})
                     if pbar.n % 10 == 0:
                         MemoryManager.cleanup()
     
@@ -346,6 +359,7 @@ def batch_crawl(urls, output_dir="/data/download_openapi", formats=['json', 'xml
     # 결과 요약
     results['end_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     results['success_rate'] = f"{(results['success'] / total_urls * 100):.1f}%" if total_urls > 0 else "0%"
+    results['timing_per_url'] = timing_results
     
     # 결과 저장
     summary_file = os.path.join(output_dir, "crawling_summary.json")

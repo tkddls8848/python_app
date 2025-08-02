@@ -1,5 +1,6 @@
 ##주기성 과거 데이터 추출 작업 필요
 ##URL Link로 데이터 주는 케이스 작업 필요
+
 import requests
 from bs4 import BeautifulSoup
 import json
