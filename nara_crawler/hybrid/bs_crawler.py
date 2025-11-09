@@ -65,8 +65,9 @@ class BSCrawler:
     async def extract_table_info(self, soup: BeautifulSoup) -> Dict:
         """테이블 정보 추출 (케이스 1, 2 공통)"""
         table_info = {}
-        tables = soup.select('table.dataset-table')
-        
+        # 모든 테이블 선택 (dataset-table 외의 중요 정보도 포함)
+        tables = soup.select('table')
+
         for table in tables:
             for row in table.find_all('tr'):
                 try:
