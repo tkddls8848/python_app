@@ -45,8 +45,9 @@ class PlaywrightCrawler:
     async def extract_table_info_pw(self, page: Page) -> Dict:
         """Playwright로 테이블 정보 추출"""
         table_info = {}
-        tables = await page.query_selector_all('table.dataset-table')
-        
+        # 모든 테이블 선택 (dataset-table 외의 중요 정보도 포함)
+        tables = await page.query_selector_all('table')
+
         for table in tables:
             rows = await table.query_selector_all('tr')
             for row in rows:
