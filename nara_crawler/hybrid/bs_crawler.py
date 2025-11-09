@@ -2,12 +2,6 @@
 BeautifulSoup 기반 정적 콘텐츠 크롤러
 케이스 1: CSV 데이터 (일반 테이블)
 케이스 2: LINK 타입 API
-케이스 3: 정적 Swagger API
-
-메타데이터 스캔은 metadata/base_scanner.py 기반으로 처리:
-- metadata/metadata_fileData.py: FileData 스캔
-- metadata/metadata_openapi.py: OpenAPI 스캔
-- metadata/metadata_standard.py: Standard 스캔
 """
 
 import asyncio
@@ -65,45 +59,31 @@ class BSCrawler:
     async def extract_table_info(self, soup: BeautifulSoup) -> Dict:
         """테이블 정보 추출 (케이스 1, 2 공통)"""
         table_info = {}
-        # 모든 테이블 선택 (dataset-table 외의 중요 정보도 포함)
-        tables = soup.select('table')
-
+        tables = soup.select('table.dataset-table')
+        
         for table in tables:
             for row in table.find_all('tr'):
                 try:
                     th = row.find('th')
-                    if th:  # th만 있어도 처리
+                    td = row.find('td')
+                    if th and td:
                         key = self.clean_text(th.get_text())
-                        if not key:  # key가 비어있으면 스킵
-                            continue
-
-                        value = ''
-                        td = row.find('td')
-                        if td:
-                            value = self.clean_text(td.get_text())
-
-                            # 전화번호 특별 처리 (<strong> 태그 안의 div#telNoDiv)
-                            if '전화번호' in key:
-                                # strong 태그 안의 div#telNoDiv 우선 찾기
-                                strong_tag = td.find('strong')
-                                if strong_tag:
-                                    tel_div = strong_tag.find('div', id='telNoDiv')
-                                    if tel_div:
-                                        value = self.clean_text(tel_div.get_text())
-                                # td 바로 아래의 div#telNoDiv도 확인
-                                if not value:
-                                    tel_div = td.find('div', id='telNoDiv')
-                                    if tel_div:
-                                        value = self.clean_text(tel_div.get_text())
-
-                            # 링크 처리
-                            if not value:
-                                link = td.find('a')
-                                if link:
-                                    value = self.clean_text(link.get_text())
-
-                        # 값이 없어도 저장 (빈 문자열로)
-                        table_info[key] = value
+                        value = self.clean_text(td.get_text())
+                        
+                        # 전화번호 특별 처리
+                        if '전화번호' in key:
+                            tel_div = td.find('div', id='telNoDiv')
+                            if tel_div:
+                                value = self.clean_text(tel_div.get_text())
+                        
+                        # 링크 처리
+                        if not value:
+                            link = td.find('a')
+                            if link:
+                                value = self.clean_text(link.get_text())
+                        
+                        if key and value:
+                            table_info[key] = value
                 except Exception:
                     continue
         
@@ -229,7 +209,7 @@ class BSCrawler:
             'url': url,
             'method': 'beautifulsoup'
         }
-        
+        print("정적", url)
         try:
             async with self.semaphore:
                 async with session.get(url) as response:

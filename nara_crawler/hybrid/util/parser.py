@@ -2,10 +2,8 @@ import json
 import re
 import os
 import csv
-from datetime import datetime
 from xml.etree.ElementTree import Element, SubElement, tostring
 from xml.dom import minidom
-from functools import lru_cache
 
 class NaraParser:
     """나라장터 API 파서 클래스 - 크롤러 통합용"""
@@ -117,14 +115,14 @@ class DataExporter:
         # API 타입에 따른 디렉토리 설정
         api_type = data.get('api_type', 'unknown')
         api_category = table_info.get('API 유형', '')
-        is_link_type = 'LINK' in api_category.upper() if api_category else False
+        is_link_type = 'Link' in api_category.upper() if api_category else False
 
         if api_type == 'link' or is_link_type:
-            base_dir = os.path.join(data_dir, 'LINK', org_name)
+            base_dir = os.path.join(data_dir, '01. Link', org_name)
         elif api_type in ['general', 'general_dynamic']:
-            base_dir = os.path.join(data_dir, '일반API_old', org_name)
+            base_dir = os.path.join(data_dir, '02. General API', org_name)  # 일반API_old → General API
         elif api_type in ['swagger', 'swagger_dynamic']:
-            base_dir = os.path.join(data_dir, '일반API', org_name)
+            base_dir = os.path.join(data_dir, '03. Swagger API', org_name)  # 일반API → Swagger API
         else:
             base_dir = os.path.join(data_dir, '기타', org_name)
         
@@ -144,15 +142,10 @@ class DataExporter:
                     success, error = DataExporter._save_as_xml(data, file_path)
                     if success:
                         saved_files.append(file_path)
-                elif format_type == 'md':
-                    file_path = os.path.join(base_dir, f"{file_prefix}.md")
-                    success, error = DataExporter._save_as_markdown(data, file_path)
-                    if success:
-                        saved_files.append(file_path)
                 elif format_type == 'csv':
                     # CSV는 data 폴더 바로 하위에 저장
                     os.makedirs('./data', exist_ok=True)
-                    file_path = os.path.join('./data', 'TOTAL_RESULT_TABLE.CSV')
+                    file_path = os.path.join('./data', 'all_result_table.csv')
                     success, error = DataExporter._save_as_csv(data, file_path)
                     if success:
                         saved_files.append(file_path)
@@ -218,208 +211,6 @@ class DataExporter:
             return True, None
         except Exception as e:
             return False, f"XML 저장 실패: {str(e)}"
-
-    @staticmethod
-    def _save_as_markdown(data, file_path):
-        """Markdown 저장"""
-        try:
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            md_content = DataExporter._dict_to_markdown(data)
-            
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(md_content)
-            
-            return True, None
-        except Exception as e:
-            return False, f"Markdown 저장 실패: {str(e)}"
-
-    @staticmethod
-    def _dict_to_markdown(data):
-        """딕셔너리를 Markdown으로 변환"""
-        api_type = data.get('api_type', 'unknown')
-
-        if api_type in ['swagger', 'swagger_dynamic']:
-            return DataExporter._swagger_to_markdown(data)
-        elif api_type in ['general', 'general_dynamic']:
-            return DataExporter._general_api_to_markdown(data)
-        elif api_type == 'link':
-            return DataExporter._link_to_markdown(data)
-        else:
-            return "# API 문서\n\n알 수 없는 API 타입입니다."
-
-    @staticmethod
-    def _swagger_to_markdown(data):
-        """Swagger API Markdown 변환"""
-        lines = []
-        api_info = data.get('api_info', {})
-        endpoints = data.get('endpoints', [])
-        
-        # 헤더
-        lines.append(f"# {api_info.get('title', 'API Documentation')}")
-        lines.append("")
-        if data.get('crawled_time'):
-            lines.append(f"**크롤링 시간:** {data['crawled_time']}")
-        if data.get('crawled_url'):
-            lines.append(f"**원본 URL:** {data['crawled_url']}")
-        lines.append("")
-        
-        # API 정보
-        lines.append("## 📋 API 정보")
-        lines.append("")
-        if api_info.get('description'):
-            lines.append(f"**설명:** {api_info['description']}")
-            lines.append("")
-        if api_info.get('base_url'):
-            lines.append(f"**Base URL:** `{api_info['base_url']}`")
-            lines.append("")
-        
-        # 엔드포인트
-        if endpoints:
-            base_url = api_info.get('base_url', '')
-            lines.append(f"## 🔗 API 엔드포인트 ({len(endpoints)}개)")
-            lines.append("")
-            
-            if base_url:
-                lines.append(f"**Base URL:** `{base_url}`")
-                lines.append("")
-            
-            for endpoint in endpoints:
-                method = endpoint.get('method', 'GET')
-                path = endpoint.get('path', '')
-                description = endpoint.get('description', '')
-                full_url = f"{base_url}{path}" if base_url and path else path
-                
-                lines.append(f"#### `{method}` {path}")
-                if base_url:
-                    lines.append(f"**완전한 URL:** `{full_url}`")
-                lines.append("")
-                if description:
-                    lines.append(f"**설명:** {description}")
-                lines.append("")
-                
-                # 파라미터
-                parameters = endpoint.get('parameters', [])
-                if parameters:
-                    lines.append("**파라미터:**")
-                    lines.append("")
-                    lines.append("| 이름 | 타입 | 필수 | 설명 |")
-                    lines.append("|------|------|------|------|")
-                    for param in parameters:
-                        name = str(param.get('name', '')).replace('|', '\\|')
-                        param_type = str(param.get('type', '')).replace('|', '\\|')
-                        required = "✅" if param.get('required', False) else "❌"
-                        desc = str(param.get('description', '')).replace('|', '\\|')
-                        if len(desc) > 50:
-                            desc = desc[:50] + "..."
-                        lines.append(f"| `{name}` | {param_type} | {required} | {desc} |")
-                    lines.append("")
-                
-                # 응답
-                responses = endpoint.get('responses', [])
-                if responses:
-                    lines.append("**응답:**")
-                    lines.append("")
-                    lines.append("| 상태 코드 | 설명 |")
-                    lines.append("|-----------|------|")
-                    for response in responses:
-                        status_code = str(response.get('status_code', '')).replace('|', '\\|')
-                        desc = str(response.get('description', '')).replace('|', '\\|')
-                        if len(desc) > 80:
-                            desc = desc[:80] + "..."
-                        lines.append(f"| `{status_code}` | {desc} |")
-                    lines.append("")
-                
-                lines.append("---")
-                lines.append("")
-        
-        # 푸터
-        lines.append("## 📝 생성 정보")
-        lines.append("")
-        lines.append("이 문서는 나라장터 API 크롤러에 의해 자동 생성되었습니다.")
-        if data.get('api_id'):
-            lines.append(f"**API ID:** {data['api_id']}")
-        if api_info.get('base_url'):
-            lines.append(f"**Base URL:** {api_info['base_url']}")
-        
-        return "\n".join(lines)
-
-    @staticmethod
-    def _general_api_to_markdown(data):
-        """일반 API Markdown 변환"""
-        lines = []
-        general_info = data.get('general_api_info', {})
-        detail_info = general_info.get('detail_info', {})
-        
-        # 헤더
-        title = detail_info.get('description', 'API Documentation')
-        if len(title) > 50:
-            title = title[:50] + "..."
-        lines.append(f"# {title}")
-        lines.append("")
-        if data.get('crawled_time'):
-            lines.append(f"**크롤링 시간:** {data['crawled_time']}")
-        if data.get('crawled_url'):
-            lines.append(f"**원본 URL:** {data['crawled_url']}")
-        lines.append("")
-        
-        # 상세정보
-        if detail_info:
-            lines.append("## 📋 API 상세정보")
-            lines.append("")
-            if detail_info.get('description'):
-                lines.append(f"**기능 설명:** {detail_info['description']}")
-                lines.append("")
-            if detail_info.get('request_url'):
-                lines.append(f"**요청 주소:** `{detail_info['request_url']}`")
-                lines.append("")
-            if detail_info.get('service_url'):
-                lines.append(f"**서비스 URL:** `{detail_info['service_url']}`")
-                lines.append("")
-        
-        # 푸터
-        lines.append("## 📝 생성 정보")
-        lines.append("")
-        lines.append("이 문서는 나라장터 API 크롤러에 의해 자동 생성되었습니다.")
-        lines.append("**API 타입:** 일반 API (Swagger 미지원)")
-        if data.get('api_id'):
-            lines.append(f"**API ID:** {data['api_id']}")
-        
-        return "\n".join(lines)
-
-    @staticmethod
-    def _link_to_markdown(data):
-        """LINK 타입 API Markdown 변환"""
-        lines = []
-        table_info = data.get('info', {})
-        
-        lines.append("# LINK 타입 API")
-        lines.append("")
-        if data.get('crawled_time'):
-            lines.append(f"**크롤링 시간:** {data['crawled_time']}")
-        if data.get('crawled_url'):
-            lines.append(f"**원본 URL:** {data['crawled_url']}")
-        lines.append("")
-        
-        lines.append("## 📋 API 정보")
-        lines.append("")
-        lines.append("이 API는 LINK 타입으로, 외부 링크를 통해 제공됩니다.")
-        lines.append("")
-        
-        if table_info:
-            lines.append("## 📊 상세 정보")
-            lines.append("")
-            for key, value in table_info.items():
-                lines.append(f"**{key}:** {value}")
-            lines.append("")
-        
-        lines.append("## 📝 생성 정보")
-        lines.append("")
-        lines.append("이 문서는 나라장터 API 크롤러에 의해 자동 생성되었습니다.")
-        lines.append("**API 타입:** LINK (외부 링크 제공)")
-        if data.get('api_id'):
-            lines.append(f"**API ID:** {data['api_id']}")
-        
-        return "\n".join(lines)
 
     @staticmethod
     def _save_as_csv(data, file_path):

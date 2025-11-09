@@ -1,6 +1,11 @@
 """
 메인 크롤러 제어 파일
 BeautifulSoup과 Playwright를 효율적으로 조합하여 사용
+
+메타데이터 스캔은 metadata/base_scanner.py 기반으로 처리:
+- metadata/metadata_fileData.py: FileData 스캔
+- metadata/metadata_openapi.py: OpenAPI 스캔
+- metadata/metadata_standard.py: Standard 스캔
 """
 
 import asyncio
@@ -9,16 +14,15 @@ import os
 import json
 from datetime import datetime
 from typing import List, Dict, Tuple
-from tqdm.asyncio import tqdm
 import time
 
 from bs_crawler import BSCrawler
 from playwright_crawler import PlaywrightCrawler
-from parser import DataExporter
-from metadata_openapi import OpenAPIMetadataScanner
+from util.parser import DataExporter
+from metadata.metadata_openapi import OpenAPIMetadataScanner
 
 class HybridCrawler:
-    def __init__(self, output_dir: str, formats: List[str], max_workers: int = 15):
+    def __init__(self, output_dir: str, formats: List[str], max_workers: int = 30):
         self.output_dir = output_dir
         self.formats = formats
         self.max_workers = max_workers
@@ -116,6 +120,8 @@ class HybridCrawler:
         self.stats['total_time'] = time.time() - start_time
         
         return all_results
+    
+
     
     async def smart_crawl(self, urls: List[str]) -> List[Dict]:
         """
@@ -267,7 +273,8 @@ class HybridCrawler:
         summary = self.generate_summary_report(results, saved_info)
         
         # 요약 파일 저장
-        summary_file = os.path.join(self.output_dir, 'crawling_summary.json')
+        current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
+        summary_file = os.path.join(self.output_dir, f'crawling_summary_{current_time}.json')
         with open(summary_file, 'w', encoding='utf-8') as f:
             json.dump(summary, f, ensure_ascii=False, indent=2)
         
@@ -342,13 +349,13 @@ def check_metadata_and_get_valid_numbers(start_num: int, end_num: int) -> List[i
     scanner = OpenAPIMetadataScanner(
         start_num=start_num, 
         end_num=end_num, 
-        max_workers=50
+        max_workers=100
     )
     results = scanner.scan_range()
     scanner.save_results()
     scanner.print_summary()
     
-    valid_numbers = results['file_numbers']
+    valid_numbers = results['data_numbers']
     print(f"\n✅ 메타데이터 스캔 완료! 유효 번호: {len(valid_numbers)}개")
     return valid_numbers
 
@@ -359,16 +366,16 @@ async def main():
         epilog="""
 예제:
   # 기본 사용 (fallback 전략)
-  python hybrid_crawler.py -s 1000 -e 1100
+  python main_crawler.py -s 1000 -e 1100
   
   # 스마트 전략 사용
-  python hybrid_crawler.py -s 1000 -e 1100 --strategy smart
+  python main_crawler.py -s 1000 -e 1100 --strategy smart
   
   # 메타데이터 스캔 건너뛰기
-  python hybrid_crawler.py -s 1000 -e 1100 --skip-metadata
+  python main_crawler.py -s 1000 -e 1100 --skip-metadata
   
   # 특정 형식만 저장
-  python hybrid_crawler.py -s 1000 -e 1100 --formats json xml
+  python main_crawler.py -s 1000 -e 1100 --formats json xml
         """
     )
     
@@ -377,14 +384,14 @@ async def main():
     parser.add_argument('-e', '--end', type=int, required=True, 
                        help='끝 문서 번호')
     parser.add_argument('-o', '--output-dir', 
-                       default='./data/hybrid_crawl',
-                       help='출력 디렉토리 (기본값: ./data/hybrid_crawl)')
+                       default='./data',
+                       help='출력 디렉토리 (기본값: ./data)')
     parser.add_argument('--formats', nargs='+', 
-                       default=['json', 'xml', 'md', 'csv'],
-                       choices=['json', 'xml', 'md', 'csv'],
+                       default=['json', 'xml', 'csv'],
+                       choices=['json', 'xml', 'csv'],
                        help='저장할 파일 형식 (기본값: 모든 형식)')
-    parser.add_argument('-w', '--workers', type=int, default=15,
-                       help='동시 작업자 수 (기본값: 15)')
+    parser.add_argument('-w', '--workers', type=int, default=20,
+                       help='동시 작업자 수 (기본값: 20)')
     parser.add_argument('--skip-metadata', action='store_true',
                        help='메타데이터 스캔 건너뛰기')
     parser.add_argument('--strategy', choices=['fallback', 'smart'],
