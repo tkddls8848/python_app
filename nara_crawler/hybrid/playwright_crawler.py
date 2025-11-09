@@ -61,9 +61,7 @@ class PlaywrightCrawler:
                         value = ''
                         td = await row.query_selector('td')
                         if td:
-                            value = self.clean_text(await td.inner_text())
-
-                            # 전화번호 특별 처리 (<strong> 태그 안의 div#telNoDiv)
+                            # 전화번호 특별 처리 (우선순위 최상위)
                             if '전화번호' in key:
                                 # strong 태그 안의 div#telNoDiv 우선 찾기
                                 strong_tag = await td.query_selector('strong')
@@ -71,17 +69,22 @@ class PlaywrightCrawler:
                                     tel_div = await strong_tag.query_selector('#telNoDiv')
                                     if tel_div:
                                         value = self.clean_text(await tel_div.inner_text())
+
                                 # td 바로 아래의 div#telNoDiv도 확인
                                 if not value:
                                     tel_div = await td.query_selector('#telNoDiv')
                                     if tel_div:
                                         value = self.clean_text(await tel_div.inner_text())
 
-                            # 링크 처리
+                            # 전화번호가 아니거나 div#telNoDiv를 못 찾은 경우
                             if not value:
+                                # 링크 우선 확인
                                 link = await td.query_selector('a')
                                 if link:
                                     value = self.clean_text(await link.inner_text())
+                                # 일반 텍스트
+                                if not value:
+                                    value = self.clean_text(await td.inner_text())
 
                         # 값이 없어도 저장 (빈 문자열로)
                         table_info[key] = value
