@@ -53,23 +53,38 @@ class PlaywrightCrawler:
             for row in rows:
                 try:
                     th = await row.query_selector('th')
-                    td = await row.query_selector('td')
-                    if th and td:
+                    if th:  # th만 있어도 처리
                         key = self.clean_text(await th.inner_text())
-                        value = self.clean_text(await td.inner_text())
-                        
-                        if '전화번호' in key:
-                            tel_div = await td.query_selector('#telNoDiv')
-                            if tel_div:
-                                value = self.clean_text(await tel_div.inner_text())
-                        
-                        if not value:
-                            link = await td.query_selector('a')
-                            if link:
-                                value = self.clean_text(await link.inner_text())
-                        
-                        if key and value:
-                            table_info[key] = value
+                        if not key:  # key가 비어있으면 스킵
+                            continue
+
+                        value = ''
+                        td = await row.query_selector('td')
+                        if td:
+                            value = self.clean_text(await td.inner_text())
+
+                            # 전화번호 특별 처리 (<strong> 태그 안의 div#telNoDiv)
+                            if '전화번호' in key:
+                                # strong 태그 안의 div#telNoDiv 우선 찾기
+                                strong_tag = await td.query_selector('strong')
+                                if strong_tag:
+                                    tel_div = await strong_tag.query_selector('#telNoDiv')
+                                    if tel_div:
+                                        value = self.clean_text(await tel_div.inner_text())
+                                # td 바로 아래의 div#telNoDiv도 확인
+                                if not value:
+                                    tel_div = await td.query_selector('#telNoDiv')
+                                    if tel_div:
+                                        value = self.clean_text(await tel_div.inner_text())
+
+                            # 링크 처리
+                            if not value:
+                                link = await td.query_selector('a')
+                                if link:
+                                    value = self.clean_text(await link.inner_text())
+
+                        # 값이 없어도 저장 (빈 문자열로)
+                        table_info[key] = value
                 except:
                     continue
         
