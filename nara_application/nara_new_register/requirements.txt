@@ -1,0 +1,8 @@
+# 데이터포털 활용신청 자동화 워크플로우
+# Python 실행 환경 패키지 의존성
+
+# 웹 브라우저 자동화
+selenium>=4.15.2
+
+# ChromeDriver 자동 관리 (선택사항 - ChromeDriver 수동 설치 시 불필요)
+# webdriver-manager>=4.0.1
