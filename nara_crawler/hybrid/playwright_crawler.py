@@ -77,6 +77,138 @@ class PlaywrightCrawler:
         general_api_info = {}
 
         try:
+            # POST 요청을 위한 3가지 값 추출
+            try:
+                post_request_values = await page.evaluate('''() => {
+                    const resultArray = [];
+
+                    // publicDataDetailPk, publicDataPk 값 먼저 추출
+                    let publicDataDetailPk = null;
+                    let publicDataPk = null;
+
+                    const detailPkElem = document.querySelector('#publicDataDetailPk');
+                    if (detailPkElem) {
+                        publicDataDetailPk = detailPkElem.value;
+                    }
+
+                    const dataPkElem = document.querySelector('#publicDataPk');
+                    if (dataPkElem) {
+                        publicDataPk = dataPkElem.value;
+                    }
+
+                    // oprtinSeqNo: select 박스의 모든 option에 대해 3가지 값을 묶어서 배열에 저장
+                    const selectElem = document.querySelector('#open_api_detail_select');
+                    if (selectElem) {
+                        const options = selectElem.querySelectorAll('option');
+                        options.forEach(opt => {
+                            if (opt.value) {
+                                resultArray.push({
+                                    oprtinSeqNo: opt.value,
+                                    publicDataDetailPk: publicDataDetailPk,
+                                    publicDataPk: publicDataPk
+                                });
+                            }
+                        });
+                    }
+
+                    return resultArray;
+                }''')
+
+                if post_request_values and len(post_request_values) > 0:
+                    # 각 항목에 대해 POST 요청 수행
+                    for item in post_request_values:
+                        try:
+                            # 테이블 태그를 보존하는 방법
+                            response_html = await page.evaluate('''async (dataObj) => {
+                                console.log('=== API 디테일 요청 시작 ===');
+                                console.log('요청 데이터:', dataObj);
+                                
+                                try {
+                                    console.log('Fetch 요청 보내는 중...');
+                                    const response = await fetch('https://www.data.go.kr/tcs/dss/selectApiDetailFunction.do', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: new URLSearchParams({
+                                            oprtinSeqNo: dataObj.oprtinSeqNo,
+                                            publicDataDetailPk: dataObj.publicDataDetailPk,
+                                            publicDataPk: dataObj.publicDataPk
+                                        }).toString()
+                                    });
+
+                                    console.log('응답 상태:', response.status, response.statusText);
+                                    
+                                    if (response.ok) {
+                                        const html = await response.text();
+                                        console.log('응답 HTML 길이:', html.length);
+                                        console.log('응답 HTML 처음 500자:', html.substring(0, 500));
+                                        
+                                        // DOM 파서를 사용하여 open-api-detail-result div의 전체 HTML 보존
+                                        const parser = new DOMParser();
+                                        const doc = parser.parseFromString(html, 'text/html');
+                                        const apiDetailDiv = doc.getElementById('open-api-detail-result');
+                                        
+                                        console.log('open-api-detail-result 요소 찾음:', !!apiDetailDiv);
+                                        
+                                        if (apiDetailDiv) {
+                                            const outerHTML = apiDetailDiv.outerHTML;
+                                            console.log('outerHTML 길이:', outerHTML.length);
+                                            console.log('outerHTML에 div 태그 포함:', outerHTML.includes('<div'));
+                                            console.log('outerHTML에 table 태그 포함:', outerHTML.includes('<table'));
+                                            console.log('outerHTML 처음 300자:', outerHTML.substring(0, 300));
+                                            
+                                            // 테이블 개수 확인
+                                            const tables = apiDetailDiv.querySelectorAll('table');
+                                            console.log('포함된 테이블 개수:', tables.length);
+                                            
+                                            return outerHTML;
+                                        } else {
+                                            console.log('open-api-detail-result를 찾지 못함, 전체 HTML 반환');
+                                            return html;
+                                        }
+                                    } else {
+                                        console.error('응답 실패:', response.status);
+                                        return null;
+                                    }
+                                } catch (e) {
+                                    console.error('Fetch 에러:', e);
+                                    return null;
+                                }
+                            }''', item)
+
+                            # Python 측에서도 디버깅 정보 출력
+                            print(f"\n=== Python 측 디버깅 ===")
+                            print(f"응답 받음: {response_html is not None}")
+                            if response_html:
+                                print(f"응답 길이: {len(response_html)}")
+                                print(f"응답 처음 10000자: {response_html[:10000]}")
+                                    
+                            # 결과 딕셔너리 생성
+                            result = {
+                                'information': response_html
+                            }
+
+                            print("response_html", response_html)
+
+                            print(f"\n=== 최종 결과 ===")
+                            print(f"information 저장 완료: {result['information'] is not None}")
+
+                            # 응답 HTML을 해당 항목에 추가
+                            if response_html:
+                                item['response_html'] = response_html
+                            else:
+                                item['response_html'] = None
+                                item['error'] = 'POST 요청 실패'
+                        except Exception as e:
+                            print(f"POST 요청 실패 (oprtinSeqNo={item.get('oprtinSeqNo')}): {e}")
+                            item['response_html'] = None
+                            item['error'] = str(e)
+
+                    general_api_info['post_request_values'] = post_request_values
+            except Exception as e:
+                print(f"POST 요청 값 추출 중 오류: {e}")
+
             # 상세기능 (동적 로드될 수 있음)
             try:
                 await page.wait_for_selector('#open-api-detail-result', timeout=5000, state='attached')
@@ -320,7 +452,7 @@ class PlaywrightCrawler:
                     'method': 'playwright'
                 })
             elif result.get('success'):
-                result['data'] = clean_all_text(result['data'])
+                result['data'] = clean_all_text(result['data'], skip_keys={'response_html'})
                 processed_results.append(result)
             else:
                 processed_results.append(result)

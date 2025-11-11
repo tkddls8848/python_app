@@ -27,13 +27,48 @@ class BSCrawler:
         text = re.sub(r'<[^>]+>', '', text)
         text = re.sub(r' +', ' ', text)
         return text.strip()
+
+    @staticmethod
+    def clean_text_preserve_tags(text):
+        """HTML 태그를 보존하면서 공백 문자만 정리"""
+        if not isinstance(text, str):
+            return text
+        # 개행, 캐리지 리턴, 탭 문자 제거
+        text = re.sub(r'[\n\r\t]+', '', text)
+        # 연속된 공백을 하나로
+        text = re.sub(r' +', ' ', text)
+        return text.strip()
     
-    def clean_all_text(self, obj):
-        """재귀적으로 모든 텍스트 정제"""
+    def clean_all_text(self, obj, skip_keys=None):
+        """재귀적으로 모든 텍스트 정제
+
+        Args:
+            obj: 정제할 객체 (dict, list, str 등)
+            skip_keys: HTML 태그를 보존할 키 이름 목록 (set 또는 list)
+                      이 키들의 값은 태그를 보존하고 공백 문자만 정리
+        """
+        if skip_keys is None:
+            skip_keys = set()
+        elif not isinstance(skip_keys, set):
+            skip_keys = set(skip_keys)
+
         if isinstance(obj, dict):
-            return {k: self.clean_all_text(v) for k, v in obj.items()}
+            result = {}
+            for k, v in obj.items():
+                if k in skip_keys:
+                    # skip_keys에 해당하는 키는 태그 보존하면서 공백만 정리
+                    if isinstance(v, str):
+                        result[k] = self.clean_text_preserve_tags(v)
+                    elif isinstance(v, (dict, list)):
+                        result[k] = self.clean_all_text(v, skip_keys)
+                    else:
+                        result[k] = v
+                else:
+                    # 일반 키는 태그 제거
+                    result[k] = self.clean_all_text(v, skip_keys)
+            return result
         elif isinstance(obj, list):
-            return [self.clean_all_text(v) for v in obj]
+            return [self.clean_all_text(v, skip_keys) for v in obj]
         elif isinstance(obj, str):
             return self.clean_text(obj)
         else:
@@ -279,22 +314,65 @@ class BSCrawler:
         
         return result
     
+    async def check_link_type(self, session: aiohttp.ClientSession, url: str) -> bool:
+        """URL이 LINK 타입인지 빠르게 확인"""
+        try:
+            async with self.semaphore:
+                async with session.get(url) as response:
+                    if response.status != 200:
+                        return False
+
+                    html = await response.text()
+                    soup = BeautifulSoup(html, 'html.parser')
+
+                    # 테이블에서 API 유형 확인
+                    tables = soup.select('table.dataset-table')
+                    for table in tables:
+                        for row in table.find_all('tr'):
+                            th = row.find('th')
+                            td = row.find('td')
+                            if th and td:
+                                key = self.clean_text(th.get_text())
+                                if 'API 유형' in key or 'API유형' in key:
+                                    value = self.clean_text(td.get_text())
+                                    return 'LINK' in value.upper()
+                    return False
+        except Exception:
+            return False
+
+    async def classify_urls_by_type(self, urls: List[str]) -> Tuple[List[str], List[str]]:
+        """URL을 LINK 타입과 나머지로 분류"""
+        async with await self.create_session() as session:
+            tasks = [(url, self.check_link_type(session, url)) for url in urls]
+            checks = await asyncio.gather(*[task[1] for task in tasks])
+
+        link_urls = []
+        other_urls = []
+
+        for url, is_link in zip(urls, checks):
+            if is_link:
+                link_urls.append(url)
+            else:
+                other_urls.append(url)
+
+        return link_urls, other_urls
+
     async def crawl_batch(self, urls: List[str]) -> Tuple[List[Dict], List[str]]:
         """배치 크롤링"""
         async with await self.create_session() as session:
             tasks = [self.extract_api_info(session, url) for url in urls]
             results = await asyncio.gather(*tasks)
-        
+
         # 성공/실패 분리
         success_results = []
         failed_urls = []
-        
+
         for result in results:
             if result['success']:
-                # 데이터 정제
-                result['data'] = self.clean_all_text(result['data'])
+                # 데이터 정제 (response_html은 HTML 태그 보존)
+                result['data'] = self.clean_all_text(result['data'], skip_keys={'response_html'})
                 success_results.append(result)
             else:
                 failed_urls.append(result['url'])
-        
+
         return success_results, failed_urls

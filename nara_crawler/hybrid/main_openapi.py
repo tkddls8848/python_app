@@ -174,15 +174,70 @@ class HybridCrawler:
             print(f"\n🔄 동적 콘텐츠 크롤링 (Playwright): {len(dynamic_urls)}개...")
             pw_results = await self.pw_crawler.crawl_batch(dynamic_urls)
             all_results.extend(pw_results)
-            
+
             for result in pw_results:
                 if result['success']:
                     self.stats['pw_success'] += 1
                 else:
                     self.stats['pw_failed'] += 1
-        
+
         return all_results
-    
+
+    async def optimized_crawl(self, urls: List[str]) -> List[Dict]:
+        """
+        최적화된 크롤링: LINK는 정적, 나머지는 동적
+        1. 모든 URL을 빠르게 스캔하여 LINK 타입 분류
+        2. LINK 타입 → BeautifulSoup으로 크롤링
+        3. 나머지(Swagger, General) → Playwright로 크롤링
+        """
+        print(f"\n📊 크롤링 시작: 총 {len(urls)}개 URL")
+        print(f"   - 1단계: LINK 타입 분류")
+        print(f"   - 2단계: LINK → 정적 크롤링 (BS)")
+        print(f"   - 3단계: Swagger/General → 동적 크롤링 (PW)")
+
+        all_results = []
+        start_time = time.time()
+
+        # 1단계: LINK 타입 분류
+        print("\n🔍 1단계: URL 타입 분류 중...")
+        link_urls, other_urls = await self.bs_crawler.classify_urls_by_type(urls)
+
+        print(f"   - LINK 타입: {len(link_urls)}개")
+        print(f"   - Swagger/General: {len(other_urls)}개")
+
+        # 2단계: LINK 타입은 BeautifulSoup으로 크롤링
+        if link_urls:
+            print(f"\n🚀 2단계: LINK 타입 크롤링 (BeautifulSoup): {len(link_urls)}개...")
+            bs_results, failed_urls = await self.bs_crawler.crawl_batch(link_urls)
+            all_results.extend(bs_results)
+
+            for result in bs_results:
+                self.stats['bs_success'] += 1
+
+            # LINK인데 실패한 것도 동적으로 재시도
+            if failed_urls:
+                print(f"   ⚠️  LINK 타입 실패: {len(failed_urls)}개 → Playwright로 재시도")
+                other_urls.extend(failed_urls)
+
+        # 3단계: 나머지는 Playwright로 크롤링
+        if other_urls:
+            print(f"\n🔄 3단계: Swagger/General 크롤링 (Playwright): {len(other_urls)}개...")
+            pw_results = await self.pw_crawler.crawl_batch(other_urls)
+            all_results.extend(pw_results)
+
+            for result in pw_results:
+                if result['success']:
+                    self.stats['pw_success'] += 1
+                else:
+                    self.stats['pw_failed'] += 1
+
+            print(f"   ✅ Playwright 성공: {self.stats['pw_success']}개")
+            print(f"   ❌ Playwright 실패: {self.stats['pw_failed']}개")
+
+        self.stats['total_time'] = time.time() - start_time
+
+        return all_results
+
     def generate_summary_report(self, results: List[Dict], saved_info: Dict) -> Dict:
         """상세 요약 리포트 생성"""
         # API 타입별 분류
@@ -243,13 +298,13 @@ class HybridCrawler:
         
         return summary
     
-    async def run(self, urls: List[str], strategy: str = 'fallback'):
+    async def run(self, urls: List[str], strategy: str = 'optimized'):
         """
         메인 실행 함수
-        
+
         Args:
             urls: 크롤링할 URL 리스트
-            strategy: 'fallback' (BS 우선) or 'smart' (패턴 분석)
+            strategy: 'optimized' (LINK 정적, 나머지 동적) or 'fallback' (BS 우선) or 'smart' (패턴 분석)
         """
         print(f"\n{'='*60}")
         print(f"🤖 하이브리드 크롤러 시작")
@@ -258,9 +313,11 @@ class HybridCrawler:
         print(f"   출력 디렉토리: {self.output_dir}")
         print(f"   파일 형식: {', '.join(self.formats)}")
         print(f"{'='*60}")
-        
+
         # 크롤링 실행
-        if strategy == 'smart':
+        if strategy == 'optimized':
+            results = await self.optimized_crawl(urls)
+        elif strategy == 'smart':
             results = await self.smart_crawl(urls)
         else:  # fallback
             results = await self.crawl_with_fallback(urls)
@@ -365,28 +422,31 @@ async def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 예제:
-  # 기본 사용 (fallback 전략)
-  python main_crawler.py -s 1000 -e 1100
-  
-  # 스마트 전략 사용
-  python main_crawler.py -s 1000 -e 1100 --strategy smart
-  
+  # 기본 사용 (optimized 전략 - LINK 정적, 나머지 동적)
+  python main_openapi.py -s 1000 -e 1100
+
+  # Fallback 전략 (모든 URL을 BS 우선 시도)
+  python main_openapi.py -s 1000 -e 1100 --strategy fallback
+
+  # Smart 전략 (URL 패턴 분석)
+  python main_openapi.py -s 1000 -e 1100 --strategy smart
+
   # 메타데이터 스캔 건너뛰기
-  python main_crawler.py -s 1000 -e 1100 --skip-metadata
-  
+  python main_openapi.py -s 1000 -e 1100 --skip-metadata
+
   # 특정 형식만 저장
-  python main_crawler.py -s 1000 -e 1100 --formats json xml
+  python main_openapi.py -s 1000 -e 1100 --formats json xml
         """
     )
-    
-    parser.add_argument('-s', '--start', type=int, required=True, 
+
+    parser.add_argument('-s', '--start', type=int, required=True,
                        help='시작 문서 번호')
-    parser.add_argument('-e', '--end', type=int, required=True, 
+    parser.add_argument('-e', '--end', type=int, required=True,
                        help='끝 문서 번호')
-    parser.add_argument('-o', '--output-dir', 
+    parser.add_argument('-o', '--output-dir',
                        default='./data',
                        help='출력 디렉토리 (기본값: ./data)')
-    parser.add_argument('--formats', nargs='+', 
+    parser.add_argument('--formats', nargs='+',
                        default=['json', 'xml', 'csv'],
                        choices=['json', 'xml', 'csv'],
                        help='저장할 파일 형식 (기본값: 모든 형식)')
@@ -394,9 +454,9 @@ async def main():
                        help='동시 작업자 수 (기본값: 20)')
     parser.add_argument('--skip-metadata', action='store_true',
                        help='메타데이터 스캔 건너뛰기')
-    parser.add_argument('--strategy', choices=['fallback', 'smart'],
-                       default='fallback',
-                       help='크롤링 전략 (fallback: BS우선, smart: 패턴분석)')
+    parser.add_argument('--strategy', choices=['optimized', 'fallback', 'smart'],
+                       default='optimized',
+                       help='크롤링 전략 (optimized: LINK정적/나머지동적, fallback: BS우선, smart: 패턴분석)')
     
     args = parser.parse_args()
     
