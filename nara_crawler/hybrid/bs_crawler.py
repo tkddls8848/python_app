@@ -292,8 +292,8 @@ class BSCrawler:
 
         for result in results:
             if result['success']:
-                # 데이터 정제 (response_html은 HTML 태그 보존)
-                result['data'] = clean_all_text(result['data'], skip_keys={'response_html'})
+                # 데이터 정제
+                result['data'] = clean_all_text(result['data'])
                 success_results.append(result)
             else:
                 failed_urls.append(result['url'])
