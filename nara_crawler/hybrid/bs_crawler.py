@@ -13,66 +13,13 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 import os
 
+from util.text_cleaner import clean_text, clean_all_text
+from util.common import SwaggerProcessor, ApiIdExtractor
+
 class BSCrawler:
     def __init__(self, max_workers: int = 20):
         self.max_workers = max_workers
         self.semaphore = asyncio.Semaphore(max_workers)
-        
-    @staticmethod
-    def clean_text(text):
-        """텍스트 정제"""
-        if not isinstance(text, str):
-            return text
-        text = re.sub(r'[\n\r\t]+', ' ', text)
-        text = re.sub(r'<[^>]+>', '', text)
-        text = re.sub(r' +', ' ', text)
-        return text.strip()
-
-    @staticmethod
-    def clean_text_preserve_tags(text):
-        """HTML 태그를 보존하면서 공백 문자만 정리"""
-        if not isinstance(text, str):
-            return text
-        # 개행, 캐리지 리턴, 탭 문자 제거
-        text = re.sub(r'[\n\r\t]+', '', text)
-        # 연속된 공백을 하나로
-        text = re.sub(r' +', ' ', text)
-        return text.strip()
-    
-    def clean_all_text(self, obj, skip_keys=None):
-        """재귀적으로 모든 텍스트 정제
-
-        Args:
-            obj: 정제할 객체 (dict, list, str 등)
-            skip_keys: HTML 태그를 보존할 키 이름 목록 (set 또는 list)
-                      이 키들의 값은 태그를 보존하고 공백 문자만 정리
-        """
-        if skip_keys is None:
-            skip_keys = set()
-        elif not isinstance(skip_keys, set):
-            skip_keys = set(skip_keys)
-
-        if isinstance(obj, dict):
-            result = {}
-            for k, v in obj.items():
-                if k in skip_keys:
-                    # skip_keys에 해당하는 키는 태그 보존하면서 공백만 정리
-                    if isinstance(v, str):
-                        result[k] = self.clean_text_preserve_tags(v)
-                    elif isinstance(v, (dict, list)):
-                        result[k] = self.clean_all_text(v, skip_keys)
-                    else:
-                        result[k] = v
-                else:
-                    # 일반 키는 태그 제거
-                    result[k] = self.clean_all_text(v, skip_keys)
-            return result
-        elif isinstance(obj, list):
-            return [self.clean_all_text(v, skip_keys) for v in obj]
-        elif isinstance(obj, str):
-            return self.clean_text(obj)
-        else:
-            return obj
     
     async def create_session(self) -> aiohttp.ClientSession:
         """최적화된 HTTP 세션 생성"""
@@ -95,33 +42,33 @@ class BSCrawler:
         """테이블 정보 추출 (케이스 1, 2 공통)"""
         table_info = {}
         tables = soup.select('table.dataset-table')
-        
+
         for table in tables:
             for row in table.find_all('tr'):
                 try:
                     th = row.find('th')
                     td = row.find('td')
                     if th and td:
-                        key = self.clean_text(th.get_text())
-                        value = self.clean_text(td.get_text())
-                        
+                        key = clean_text(th.get_text())
+                        value = clean_text(td.get_text())
+
                         # 전화번호 특별 처리
                         if '전화번호' in key:
                             tel_div = td.find('div', id='telNoDiv')
                             if tel_div:
-                                value = self.clean_text(tel_div.get_text())
-                        
+                                value = clean_text(tel_div.get_text())
+
                         # 링크 처리
                         if not value:
                             link = td.find('a')
                             if link:
-                                value = self.clean_text(link.get_text())
-                        
+                                value = clean_text(link.get_text())
+
                         if key and value:
                             table_info[key] = value
                 except Exception:
                     continue
-        
+
         return table_info
     
     def extract_swagger_json(self, soup: BeautifulSoup) -> Optional[Dict]:
@@ -164,43 +111,20 @@ class BSCrawler:
                     continue
         
         return None
-    
-    def process_swagger_data(self, swagger_json: Dict, api_id: str,
-                           url: str, table_info: Dict) -> Dict:
-        """Swagger 데이터 처리"""
-        from util.parser import NaraParser
-        parser = NaraParser(None)
-        
-        api_info = parser.extract_api_info(swagger_json)
-        base_url = parser.extract_base_url(swagger_json)
-        api_info['base_url'] = base_url
-        api_info['schemes'] = swagger_json.get('schemes', ['https'])
-        endpoints = parser.extract_endpoints(swagger_json)
-        
-        return {
-            'api_id': api_id,
-            'crawled_url': url,
-            'crawled_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'info': table_info,
-            'api_info': api_info,
-            'endpoints': endpoints,
-            'swagger_json': swagger_json,
-            'api_type': 'swagger'
-        }
-    
+
     def extract_general_api_info(self, soup: BeautifulSoup) -> Dict:
         """일반 API 정보 추출"""
         general_api_info = {}
-        
+
         # 상세기능
         detail_div = soup.find('div', id='open-api-detail-result')
         if detail_div:
             desc_elem = detail_div.find('h4', class_='tit')
             if desc_elem:
                 general_api_info['detail_info'] = {
-                    'description': self.clean_text(desc_elem.get_text())
+                    'description': clean_text(desc_elem.get_text())
                 }
-        
+
         # 요청변수 테이블
         request_table = soup.find('table', id='request-parameter-table')
         if request_table:
@@ -209,14 +133,14 @@ class BSCrawler:
                 cols = row.find_all('td')
                 if len(cols) >= 4:
                     params.append({
-                        'name': self.clean_text(cols[0].get_text()),
-                        'type': self.clean_text(cols[1].get_text()),
-                        'required': self.clean_text(cols[2].get_text()),
-                        'description': self.clean_text(cols[3].get_text())
+                        'name': clean_text(cols[0].get_text()),
+                        'type': clean_text(cols[1].get_text()),
+                        'required': clean_text(cols[2].get_text()),
+                        'description': clean_text(cols[3].get_text())
                     })
             if params:
                 general_api_info['request_parameters'] = params
-        
+
         # 출력결과 테이블
         response_table = soup.find('table', id='response-parameter-table')
         if response_table:
@@ -225,13 +149,13 @@ class BSCrawler:
                 cols = row.find_all('td')
                 if len(cols) >= 3:
                     outputs.append({
-                        'name': self.clean_text(cols[0].get_text()),
-                        'type': self.clean_text(cols[1].get_text()),
-                        'description': self.clean_text(cols[2].get_text())
+                        'name': clean_text(cols[0].get_text()),
+                        'type': clean_text(cols[1].get_text()),
+                        'description': clean_text(cols[2].get_text())
                     })
             if outputs:
                 general_api_info['response_parameters'] = outputs
-        
+
         return general_api_info
     
     async def extract_api_info(self, session: aiohttp.ClientSession, url: str) -> Dict:
@@ -254,10 +178,9 @@ class BSCrawler:
                     
                     html = await response.text()
                     soup = BeautifulSoup(html, 'html.parser')
-                    
+
                     # API ID 추출
-                    m = re.search(r'/data/(\d+)/openapi', url)
-                    api_id = m.group(1) if m else f"api_{url.replace('https://', '').replace('/', '_')}"
+                    api_id = ApiIdExtractor.extract_api_id(url)
                     result['api_id'] = api_id
                     
                     # 1. 테이블 정보 추출 (모든 케이스 공통)
@@ -284,8 +207,8 @@ class BSCrawler:
                     # 3. Swagger JSON 체크 (케이스 3)
                     swagger_json = self.extract_swagger_json(soup)
                     if swagger_json:
-                        result['data'] = self.process_swagger_data(
-                            swagger_json, api_id, url, table_info
+                        result['data'] = SwaggerProcessor.process_swagger_data(
+                            swagger_json, api_id, url, table_info, api_type='swagger'
                         )
                         result['success'] = True
                         return result
@@ -332,9 +255,9 @@ class BSCrawler:
                             th = row.find('th')
                             td = row.find('td')
                             if th and td:
-                                key = self.clean_text(th.get_text())
+                                key = clean_text(th.get_text())
                                 if 'API 유형' in key or 'API유형' in key:
-                                    value = self.clean_text(td.get_text())
+                                    value = clean_text(td.get_text())
                                     return 'LINK' in value.upper()
                     return False
         except Exception:
@@ -370,7 +293,7 @@ class BSCrawler:
         for result in results:
             if result['success']:
                 # 데이터 정제 (response_html은 HTML 태그 보존)
-                result['data'] = self.clean_all_text(result['data'], skip_keys={'response_html'})
+                result['data'] = clean_all_text(result['data'], skip_keys={'response_html'})
                 success_results.append(result)
             else:
                 failed_urls.append(result['url'])
