@@ -162,41 +162,61 @@ class PlaywrightCrawler:
                                             // 각 테이블 파싱
                                             tables.forEach((table, tableIndex) => {
                                                 const tableData = {
+                                                    headers: [],
                                                     rows: []
                                                 };
 
-                                                const rows = table.querySelectorAll('tr');
-                                                rows.forEach((row, rowIndex) => {
-                                                    const th = row.querySelector('th');
-                                                    const td = row.querySelector('td');
+                                                // 1. 헤더 추출 (첫 번째 tr의 모든 th)
+                                                const headerRow = table.querySelector('tr');
+                                                if (headerRow) {
+                                                    const headerCells = headerRow.querySelectorAll('th');
+                                                    headerCells.forEach(th => {
+                                                        tableData.headers.push(th.textContent.trim());
+                                                    });
+                                                }
 
-                                                    if (th || td) {
-                                                        const rowData = {
-                                                            key: th ? th.textContent.trim() : '',
-                                                            value: td ? td.textContent.trim() : ''
-                                                        };
-
-                                                        // 전화번호 특별 처리
-                                                        if (rowData.key && rowData.key.includes('전화번호') && td) {
-                                                            const telElem = td.querySelector('#telNoDiv, #telNo');
-                                                            if (telElem) {
-                                                                rowData.value = telElem.textContent.trim();
+                                                // 2. 데이터 행 추출 (두 번째 tr부터)
+                                                const dataRows = table.querySelectorAll('tr');
+                                                for (let i = 1; i < dataRows.length; i++) {  // 첫 행(헤더) 제외
+                                                    const row = dataRows[i];
+                                                    const cells = row.querySelectorAll('td');
+                                                    
+                                                    if (cells.length > 0) {
+                                                        const rowData = {};
+                                                        
+                                                        // 각 셀을 해당 헤더와 매핑
+                                                        cells.forEach((cell, cellIndex) => {
+                                                            const headerName = tableData.headers[cellIndex] || `column_${cellIndex}`;
+                                                            let cellValue = cell.textContent.trim();
+                                                            
+                                                            // 전화번호 특별 처리
+                                                            if (headerName.includes('전화번호')) {
+                                                                const telElem = cell.querySelector('#telNoDiv, #telNo');
+                                                                if (telElem) {
+                                                                    cellValue = telElem.textContent.trim();
+                                                                }
                                                             }
-                                                        }
-
-                                                        // 링크 처리
-                                                        if (!rowData.value && td) {
-                                                            const link = td.querySelector('a');
-                                                            if (link) {
-                                                                rowData.value = link.textContent.trim();
-                                                                rowData.link = link.href;
+                                                            
+                                                            // 링크 처리
+                                                            if (!cellValue || cellValue === '') {
+                                                                const link = cell.querySelector('a');
+                                                                if (link) {
+                                                                    cellValue = link.textContent.trim();
+                                                                    rowData[`${headerName}_link`] = link.href;
+                                                                }
                                                             }
+                                                            
+                                                            rowData[headerName] = cellValue;
+                                                        });
+                                                        
+                                                        // 빈 행이 아닌 경우만 추가
+                                                        if (Object.keys(rowData).length > 0) {
+                                                            tableData.rows.push(rowData);
                                                         }
-
-                                                        tableData.rows.push(rowData);
                                                     }
-                                                });
+                                                }
 
+                                                // 테이블에 데이터가 있는 경우만 추가
                                                 if (tableData.rows.length > 0) {
                                                     parsedData.tables.push(tableData);
                                                 }
