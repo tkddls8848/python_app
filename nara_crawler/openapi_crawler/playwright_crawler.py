@@ -1,7 +1,5 @@
 """
 Playwright 기반 동적 콘텐츠 크롤러
-케이스 3: 동적 렌더링이 필요한 Swagger API
-케이스 4: 동적 렌더링이 필요한 Swagger없는 카테고리별 페이지
 """
 
 import asyncio
@@ -10,7 +8,6 @@ import re
 import json
 from datetime import datetime
 from typing import Dict, List, Optional
-import time
 from util.text_cleaner import clean_text, clean_all_text
 from util.common import SwaggerProcessor, ApiIdExtractor
 from util.table_extractor import extract_table_info_pw
@@ -79,7 +76,7 @@ class PlaywrightCrawler:
         try:
             # POST 요청을 위한 3가지 값 추출
             try:
-                post_request_values = await page.evaluate('''() => {
+                post_request_params = await page.evaluate('''() => {
                     const resultArray = [];
 
                     // publicDataDetailPk, publicDataPk 값 먼저 추출
@@ -114,17 +111,17 @@ class PlaywrightCrawler:
                     return resultArray;
                 }''')
 
-                if post_request_values and len(post_request_values) > 0:
+                if post_request_params and len(post_request_params) > 0:
+                    # 응답 데이터만 저장할 배열
+                    response_data_list = []
+                    endpoints_list = []
+
                     # 각 항목에 대해 POST 요청 수행
-                    for item in post_request_values:
+                    for item in post_request_params:
                         try:
                             # HTML을 즉시 JSON으로 파싱
                             response_data = await page.evaluate('''async (dataObj) => {
-                                console.log('=== API 디테일 요청 시작 ===');
-                                console.log('요청 데이터:', dataObj);
-
                                 try {
-                                    console.log('Fetch 요청 보내는 중...');
                                     const response = await fetch('https://www.data.go.kr/tcs/dss/selectApiDetailFunction.do', {
                                         method: 'POST',
                                         headers: {
@@ -137,41 +134,35 @@ class PlaywrightCrawler:
                                         }).toString()
                                     });
 
-                                    console.log('응답 상태:', response.status, response.statusText);
-
                                     if (response.ok) {
                                         const html = await response.text();
-                                        console.log('응답 HTML 길이:', html.length);
 
                                         // DOM 파서를 사용하여 HTML을 파싱
                                         const parser = new DOMParser();
                                         const doc = parser.parseFromString(html, 'text/html');
                                         const apiDetailDiv = doc.getElementById('open-api-detail-result');
 
-                                        console.log('open-api-detail-result 요소 찾음:', !!apiDetailDiv);
-
                                         if (apiDetailDiv) {
                                             // 테이블을 JSON으로 파싱
                                             const tables = apiDetailDiv.querySelectorAll('table');
-                                            console.log('포함된 테이블 개수:', tables.length);
-
                                             const parsedData = {
-                                                tables: []
+                                                endpoint: {
+                                                    "요청변수(Request Parameter)": null,
+                                                    "출력결과(Response Element)": null
+                                                }
                                             };
 
                                             // 각 테이블 파싱
                                             tables.forEach((table, tableIndex) => {
-                                                const tableData = {
-                                                    headers: [],
-                                                    rows: []
-                                                };
+                                                const tableData = [];
 
-                                                // 1. 헤더 추출 (첫 번째 tr의 모든 th)
+                                                // 1. 헤더 추출 (저장하지 않지만 매핑을 위해 파싱)
+                                                const headers = [];
                                                 const headerRow = table.querySelector('tr');
                                                 if (headerRow) {
                                                     const headerCells = headerRow.querySelectorAll('th');
                                                     headerCells.forEach(th => {
-                                                        tableData.headers.push(th.textContent.trim());
+                                                        headers.push(th.textContent.trim());
                                                     });
                                                 }
 
@@ -180,15 +171,15 @@ class PlaywrightCrawler:
                                                 for (let i = 1; i < dataRows.length; i++) {  // 첫 행(헤더) 제외
                                                     const row = dataRows[i];
                                                     const cells = row.querySelectorAll('td');
-                                                    
+
                                                     if (cells.length > 0) {
                                                         const rowData = {};
-                                                        
+
                                                         // 각 셀을 해당 헤더와 매핑
                                                         cells.forEach((cell, cellIndex) => {
-                                                            const headerName = tableData.headers[cellIndex] || `column_${cellIndex}`;
+                                                            const headerName = headers[cellIndex] || `column_${cellIndex}`;
                                                             let cellValue = cell.textContent.trim();
-                                                            
+
                                                             // 전화번호 특별 처리
                                                             if (headerName.includes('전화번호')) {
                                                                 const telElem = cell.querySelector('#telNoDiv, #telNo');
@@ -196,7 +187,7 @@ class PlaywrightCrawler:
                                                                     cellValue = telElem.textContent.trim();
                                                                 }
                                                             }
-                                                            
+
                                                             // 링크 처리
                                                             if (!cellValue || cellValue === '') {
                                                                 const link = cell.querySelector('a');
@@ -205,24 +196,52 @@ class PlaywrightCrawler:
                                                                     rowData[`${headerName}_link`] = link.href;
                                                                 }
                                                             }
-                                                            
+
                                                             rowData[headerName] = cellValue;
                                                         });
-                                                        
+
                                                         // 빈 행이 아닌 경우만 추가
                                                         if (Object.keys(rowData).length > 0) {
-                                                            tableData.rows.push(rowData);
+                                                            tableData.push(rowData);
                                                         }
                                                     }
                                                 }
 
-                                                // 테이블에 데이터가 있는 경우만 추가
-                                                if (tableData.rows.length > 0) {
-                                                    parsedData.tables.push(tableData);
+                                                // 테이블에 데이터가 있는 경우 첫 번째/두 번째 구분하여 저장
+                                                if (tableData.length > 0) {
+                                                    if (tableIndex === 0) {
+                                                        parsedData.endpoint["요청변수(Request Parameter)"] = tableData;
+                                                    } else if (tableIndex === 1) {
+                                                        parsedData.endpoint["출력결과(Response Element)"] = tableData;
+                                                    }
                                                 }
                                             });
 
-                                            console.log('파싱된 테이블 개수:', parsedData.tables.length);
+                                            // div.box-gray > ul.dot-list 파싱
+                                            const boxGray = apiDetailDiv.querySelector('div.box-gray');
+                                            if (boxGray) {
+                                                const dotList = boxGray.querySelector('ul.dot-list');
+                                                if (dotList) {
+                                                    const endpointData = {};
+                                                    const listItems = dotList.querySelectorAll('li');
+
+                                                    listItems.forEach(li => {
+                                                        const strongTag = li.querySelector('strong');
+                                                        if (strongTag) {
+                                                            const key = strongTag.textContent.trim();
+                                                            // strong 태그를 제거한 나머지 텍스트가 값
+                                                            const value = li.textContent.replace(strongTag.textContent, '').trim();
+                                                            endpointData[key] = value;
+                                                        }
+                                                    });
+
+                                                    // endpoint 기본 정보를 기존 endpoint 객체에 병합
+                                                    if (Object.keys(endpointData).length > 0) {
+                                                        Object.assign(parsedData.endpoint, endpointData);
+                                                    }
+                                                }
+                                            }
+
                                             return parsedData;
                                         } else {
                                             console.log('open-api-detail-result를 찾지 못함');
@@ -238,28 +257,47 @@ class PlaywrightCrawler:
                                 }
                             }''', item)
 
-                            # Python 측에서도 디버깅 정보 출력
-                            print(f"\n=== Python 측 디버깅 ===")
-                            print(f"응답 받음: {response_data is not None}")
+                            # api_details 항목 구성: descriptions에 endpoint 정보와 테이블 포함
                             if response_data:
-                                print(f"파싱된 테이블 개수: {len(response_data.get('tables', []))}")
-                                print(f"응답 데이터 구조: {response_data}")
-
-                            print(f"\n=== 최종 결과 ===")
-                            print(f"response_data 저장 완료: {response_data is not None}")
-
-                            # 응답 데이터를 해당 항목에 추가
-                            if response_data:
-                                item['response_data'] = response_data
+                                # extract_general_api_info_pw 메서드 내의 해당 부분을 다음과 같이 수정
+                                if response_data.get('endpoint'):
+                                    # endpoint 데이터 분리: 기본 정보와 테이블 데이터
+                                    endpoint_basic_info = {}
+                                    endpoint_table_data = {}
+                                    
+                                    table_keys = ["요청변수(Request Parameter)", "출력결과(Response Element)"]
+                                    
+                                    for key, value in response_data['endpoint'].items():
+                                        if key in table_keys:
+                                            # 테이블 데이터는 별도로 보관 (api_details에는 포함)
+                                            endpoint_table_data[key] = value
+                                        else:
+                                            # 기본 정보는 endpoints에 저장
+                                            endpoint_basic_info[key] = value
+                                    
+                                    # api_details에는 전체 정보 유지 (테이블 데이터 포함)
+                                    api_detail_item = {
+                                        'descriptions': {
+                                            **endpoint_basic_info,  # 기본 정보
+                                            **endpoint_table_data   # 테이블 데이터
+                                        }
+                                    }
+                                    response_data_list.append(api_detail_item)
+                                    
+                                    # endpoints에는 기본 정보만 저장
+                                    endpoints_list.append(endpoint_basic_info)
+                                # endpoint가 없는 경우 전체 응답 저장
+                                else:
+                                    response_data_list.append(response_data)
                             else:
-                                item['response_data'] = None
-                                item['error'] = 'POST 요청 실패'
+                                response_data_list.append({'error': 'POST 요청 실패'})
                         except Exception as e:
                             print(f"POST 요청 실패 (oprtinSeqNo={item.get('oprtinSeqNo')}): {e}")
-                            item['response_data'] = None
-                            item['error'] = str(e)
+                            response_data_list.append({'error': str(e)})
 
-                    general_api_info['post_request_values'] = post_request_values
+                    # 응답 데이터만 저장 (POST 요청 파라미터는 제외)
+                    general_api_info['api_details'] = response_data_list
+                    general_api_info['endpoints'] = endpoints_list
             except Exception as e:
                 print(f"POST 요청 값 추출 중 오류: {e}")
 
@@ -270,9 +308,9 @@ class PlaywrightCrawler:
                 if detail_div:
                     desc_elem = await detail_div.query_selector('h4.tit')
                     if desc_elem:
-                        description = await desc_elem.inner_text()
+                        descriptions = await desc_elem.inner_text()
                         general_api_info['detail_info'] = {
-                            'description': clean_text(description)
+                            'descriptions': clean_text(descriptions)
                         }
             except:
                 pass
@@ -297,7 +335,7 @@ class PlaywrightCrawler:
                             name: cols[0].textContent.trim(),
                             type: cols[1].textContent.trim(),
                             required: cols[2].textContent.trim(),
-                            description: cols[3].textContent.trim()
+                            descriptions: cols[3].textContent.trim()
                         });
                     }
                 }
@@ -320,7 +358,7 @@ class PlaywrightCrawler:
                         params.push({
                             name: cols[0].textContent.trim(),
                             type: cols[1].textContent.trim(),
-                            description: cols[2].textContent.trim()
+                            descriptions: cols[2].textContent.trim()
                         });
                     }
                 }
@@ -433,7 +471,7 @@ class PlaywrightCrawler:
                 swagger_json = await self.extract_swagger_json_pw(page)
                 if swagger_json:
                     result['data'] = SwaggerProcessor.process_swagger_data(
-                        swagger_json, api_id, url, table_info, api_type='swagger_dynamic'
+                        swagger_json, api_id, url, table_info, api_type='swagger'
                     )
                     result['success'] = True
                     return result
@@ -441,13 +479,19 @@ class PlaywrightCrawler:
             elif api_type == 'general':
                 general_api_info = await self.extract_general_api_info_pw(page)
                 if general_api_info:
+                    # endpoints와 api_details를 general_api_info에서 추출
+                    endpoints = general_api_info.pop('endpoints', [])
+                    api_details = general_api_info.pop('api_details', [])
+
                     result['data'] = {
                         'api_id': api_id,
                         'crawled_url': url,
                         'crawled_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         'info': table_info,
                         'general_api_info': general_api_info,
-                        'api_type': 'general_dynamic'
+                        'api_details': api_details,
+                        'endpoints': endpoints,
+                        'api_type': 'general'
                     }
                     result['success'] = True
                     return result

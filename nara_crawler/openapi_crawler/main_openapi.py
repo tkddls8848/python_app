@@ -2,10 +2,10 @@
 메인 크롤러 제어 파일
 BeautifulSoup과 Playwright를 효율적으로 조합하여 사용
 
-메타데이터 스캔은 metadata/base_scanner.py 기반으로 처리:
-- metadata/metadata_fileData.py: FileData 스캔
-- metadata/metadata_openapi.py: OpenAPI 스캔
-- metadata/metadata_standard.py: Standard 스캔
+메타데이터 스캔은 util/scanner/base_scanner.py 기반으로 처리:
+- util/scanner/metadata_fileData.py: FileData 스캔
+- util/scanner/metadata_openapi.py: OpenAPI 스캔
+- util/scanner/metadata_standard.py: Standard 스캔
 """
 
 import asyncio
@@ -19,10 +19,10 @@ import time
 from bs_crawler import BSCrawler
 from playwright_crawler import PlaywrightCrawler
 from util.parser import DataExporter
-from metadata.metadata_openapi import OpenAPIMetadataScanner
+from util.scanner.metadata_openapi import OpenAPIMetadataScanner
 
 class HybridCrawler:
-    def __init__(self, output_dir: str, formats: List[str], max_workers: int = 30):
+    def __init__(self, output_dir: str, formats: List[str], max_workers: int = 40):
         self.output_dir = output_dir
         self.formats = formats
         self.max_workers = max_workers
@@ -406,7 +406,7 @@ def check_metadata_and_get_valid_numbers(start_num: int, end_num: int) -> List[i
     scanner = OpenAPIMetadataScanner(
         start_num=start_num, 
         end_num=end_num, 
-        max_workers=100
+        max_workers=150
     )
     results = scanner.scan_range()
     scanner.save_results()
@@ -450,8 +450,8 @@ async def main():
                        default=['json', 'xml', 'csv'],
                        choices=['json', 'xml', 'csv'],
                        help='저장할 파일 형식 (기본값: 모든 형식)')
-    parser.add_argument('-w', '--workers', type=int, default=20,
-                       help='동시 작업자 수 (기본값: 20)')
+    parser.add_argument('-w', '--workers', type=int, default=30,
+                       help='동시 작업자 수 (기본값: 30)')
     parser.add_argument('--skip-metadata', action='store_true',
                        help='메타데이터 스캔 건너뛰기')
     parser.add_argument('--strategy', choices=['optimized', 'fallback', 'smart'],
@@ -465,9 +465,9 @@ async def main():
         print("❌ 오류: 시작 번호가 끝 번호보다 클 수 없습니다.")
         return
     
-    if args.workers < 5 or args.workers > 30:
-        print(f"⚠️ 경고: 작업자 수를 5-30 사이로 조정합니다. (입력값: {args.workers})")
-        args.workers = max(5, min(30, args.workers))
+    if args.workers < 5 or args.workers > 40:
+        print(f"⚠️ 경고: 작업자 수를 5-40 사이로 조정합니다. (입력값: {args.workers})")
+        args.workers = max(5, min(40, args.workers))
     
     # URL 생성
     if args.skip_metadata:

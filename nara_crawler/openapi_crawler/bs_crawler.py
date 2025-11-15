@@ -1,7 +1,5 @@
 """
 BeautifulSoup 기반 정적 콘텐츠 크롤러
-케이스 1: CSV 데이터 (일반 테이블)
-케이스 2: LINK 타입 API
 """
 
 import asyncio
@@ -11,7 +9,6 @@ import re
 import json
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
-import os
 
 from util.text_cleaner import clean_text, clean_all_text
 from util.common import SwaggerProcessor, ApiIdExtractor
@@ -216,12 +213,33 @@ class BSCrawler:
                     # 4. 일반 API 정보 추출 (케이스 1)
                     general_api_info = self.extract_general_api_info(soup)
                     if general_api_info:
+                        # general_api_info를 api_info, endpoints, general_json으로 분리
+                        api_info = {}
+                        general_json = {}
+                        endpoints = []
+
+                        # post_request_values를 general_json으로 이동하고 response_data의 tables 키 제거
+                        if 'post_request_values' in general_api_info:
+                            post_request_values = general_api_info['post_request_values']
+                            for item in post_request_values:
+                                if 'response_data' in item and item['response_data'] and 'tables' in item['response_data']:
+                                    # tables 키 제거하고 배열 내용을 response_data로 직접 할당
+                                    item['response_data'] = item['response_data']['tables']
+                            general_json['post_request_values'] = post_request_values
+
+                        # 나머지 필드들을 api_info로 이동
+                        for key, value in general_api_info.items():
+                            if key != 'post_request_values':
+                                api_info[key] = value
+
                         result['data'] = {
                             'api_id': api_id,
                             'crawled_url': url,
                             'crawled_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                             'info': table_info,
-                            'general_api_info': general_api_info,
+                            'api_info': api_info,
+                            'endpoints': endpoints,
+                            'general_json': general_json,
                             'api_type': 'general'
                         }
                         result['success'] = True
